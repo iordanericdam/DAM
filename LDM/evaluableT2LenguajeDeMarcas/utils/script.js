@@ -24,11 +24,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let nodo = document.createElement("li");
       nodo.textContent = `${inputNombre.value} ${inputApellidos.value}`;
-      nodo.className = "list-group-item";
+      nodo.className = "animate__animated animate__backInLeft list-group-item";
       lista.append(nodo);
 
       inputNombre.value = "";
       inputApellidos.value = "";
+      inputCorreo.value = "";
+     
     }
   });
 });
