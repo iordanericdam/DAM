@@ -1,0 +1,11 @@
+.parrafos{
+    color: rgb(0, 0, 0);
+}
+
+.formulario {
+    max-width: 500px; 
+    margin: auto; 
+    padding: 20px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+  }
