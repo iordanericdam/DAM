@@ -1,5 +1,5 @@
 .colorDeFondo {
-  background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
 }
 .verde {
   background-color: rgb(52, 228, 52);
@@ -24,7 +24,9 @@
 .Ejercicio1,
 .Ejercicio2,
 .Ejercicio3,
-.Ejercicio4 {
+.Ejercicio4,
+.Ejercicio4-1,
+.Ejercicio5 {
   margin-top: 3%;
   background-color: #f0f0f0;
   padding: 20px;
@@ -44,11 +46,23 @@
   box-shadow: 0 0 10px rgb(0, 255, 234);
 }
 
+.Ejercicio4-1{
+  box-shadow: 0 0 10px rgb(0, 255, 234);
+  width: 80%;
+  position: absolute;
+    left: 10%;
+}
+
+.Ejercicio5{
+  box-shadow: 0 0 10px rgb(255, 1, 247);
+  margin-bottom: 10%;
+}
+
 .info {
   margin-bottom: 10px;
 }
 
 .info h4,
-p {
+info p {
   display: inline;
 }

@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let azul = document.querySelector("#azul");
   let amarillo = document.querySelector("#amarillo");
   let morado = document.querySelector("#morado");
-  let defa;
+  let porDefecto = document.querySelector("#defaultBoton");
 
   verde.addEventListener("click", (e) => {
     document.getElementById("ejercicio3").className = "verde";
@@ -87,6 +87,9 @@ document.addEventListener("DOMContentLoaded", function () {
   morado.addEventListener("click", (e) => {
     document.getElementById("ejercicio3").className = "morado";
   });
+  porDefecto.addEventListener("click", (e) => {
+    document.getElementById("ejercicio3").className = "colorDeFondo";
+  });
 
   // ----------- Ejercicio 4 ------------------
 
@@ -95,10 +98,14 @@ document.addEventListener("DOMContentLoaded", function () {
   let inputEmail = document.querySelector("#inputEmail");
   let selectEdad = document.querySelector("#edadSelect");
   let infoNombre = document.querySelector("#infoNombre");
+  let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+width=0,height=0,left=-1000,top=-1000`;
 
   let botonEjercicio4 = document.querySelector("#botonEjercicio4Submit");
+  // no se seguir
 
   botonEjercicio4.addEventListener("click", (e) => {
+    window.open("./../infoEjercicio4.html", "test", params);
     parrafo1.textContent = "aaaa";
     infoNombre.textContent = inputNombre.value;
     console.log(inputNombre.value);
@@ -106,5 +113,21 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(inputEmail.value);
     console.log(selectEdad.value);
     prompt("Cuantos años tienes?", "100");
+  });
+
+  // ----------- Ejercicio 5 ------------------
+
+  let botonEjercicio5 = document.querySelector("#botonEjercicio5");
+
+  botonEjercicio5.addEventListener("click", (e) => {
+    let nombre = prompt("¿Como te llamas?");
+    let edad = prompt("¿Cuantos años tienes?");
+    if (edad != null && nombre != null) {
+      alert(`Hola ${nombre} has vivido ${calcularEdad(edad)} dias`);
+    }
+
+    function calcularEdad(edad) {
+      return edad * 365;
+    }
   });
 });
