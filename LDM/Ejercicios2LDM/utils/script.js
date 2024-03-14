@@ -70,21 +70,22 @@ document.addEventListener("DOMContentLoaded", function () {
   let azul = document.querySelector("#azul");
   let amarillo = document.querySelector("#amarillo");
   let morado = document.querySelector("#morado");
+  let defa;
 
   verde.addEventListener("click", (e) => {
-    document.getElementById("mydiv").className = "verde";
+    document.getElementById("ejercicio3").className = "verde";
   });
   rojo.addEventListener("click", (e) => {
-    document.getElementById("mydiv").className = "rojo";
+    document.getElementById("ejercicio3").className = "rojo";
   });
   azul.addEventListener("click", (e) => {
-    document.getElementById("mydiv").className = "azul";
+    document.getElementById("ejercicio3").className = "azul";
   });
   amarillo.addEventListener("click", (e) => {
-    document.getElementById("mydiv").className = "amarillo";
+    document.getElementById("ejercicio3").className = "amarillo";
   });
   morado.addEventListener("click", (e) => {
-    document.getElementById("mydiv").className = "morado";
+    document.getElementById("ejercicio3").className = "morado";
   });
 
   // ----------- Ejercicio 4 ------------------
@@ -93,10 +94,13 @@ document.addEventListener("DOMContentLoaded", function () {
   let inputApellidos = document.querySelector("#inputApellidos");
   let inputEmail = document.querySelector("#inputEmail");
   let selectEdad = document.querySelector("#edadSelect");
+  let infoNombre = document.querySelector("#infoNombre");
 
-  let botonEjercicio4 = document.querySelector("#botonEjercicio4");
+  let botonEjercicio4 = document.querySelector("#botonEjercicio4Submit");
 
   botonEjercicio4.addEventListener("click", (e) => {
+    parrafo1.textContent = "aaaa";
+    infoNombre.textContent = inputNombre.value;
     console.log(inputNombre.value);
     console.log(inputApellidos.value);
     console.log(inputEmail.value);
