@@ -5,10 +5,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let input1 = document.querySelector("#input1");
 
   boton1.addEventListener("click", () => {
-    if (input1.value.length > 0) {
+    if (input1.value.length > 0 && !isNaN(input1.value)) {
       parrafo1.textContent = "";
       ejercicio1(esPrimo(input1.value));
       input1.value = "";
+    } else {
+      console.log("El dato no es un numero");
     }
   });
 
