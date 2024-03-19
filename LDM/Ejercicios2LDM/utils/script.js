@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ejercicio1(esPrimo(input1.value));
       input1.value = "";
     } else {
-      console.log("El dato no es un numero");
+      parrafo1.textContent = "El dato no es un numero";
     }
   });
 
@@ -44,12 +44,14 @@ document.addEventListener("DOMContentLoaded", function () {
   let input2 = document.querySelector("#input2");
 
   botonCalcular.addEventListener("click", (e) => {
-    if (input2.value.length > 0) {
+    if (input2.value.length > 0 && !isNaN(input2.value)) {
       if (!isNaN(input2.value)) {
         calcularCelsiusfahrenheit(input2.value, parrafo2);
       } else {
         parrafo2.textContent = "Debes introducir un numero";
       }
+    } else {
+      parrafo2.textContent = "El dato no es un numero";
     }
   });
 
@@ -62,7 +64,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let f;
     f = numero * 1.8 + 32;
 
-    parrafo.textContent += `${numero}ºC equivale a ${f} en fahrenheit`;
+    parrafo.textContent += `${numero}ºC equivale a ${f.toFixed(
+      2
+    )} en fahrenheit`;
   }
 
   // ----------- Ejercicio 3 ------------------
@@ -99,22 +103,49 @@ document.addEventListener("DOMContentLoaded", function () {
   let inputApellidos = document.querySelector("#inputApellidos");
   let inputEmail = document.querySelector("#inputEmail");
   let selectEdad = document.querySelector("#edadSelect");
-  let infoNombre = document.querySelector("#infoNombre");
-  let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-width=0,height=0,left=-1000,top=-1000`;
+
+  for (var i = 0; i <= 99; i++) {
+    var option = document.createElement("option");
+    option.text = i;
+    option.value = i;
+    selectEdad.appendChild(option);
+  }
 
   let botonEjercicio4 = document.querySelector("#botonEjercicio4Submit");
-  // no se seguir
+  let botonEjercicio4Reset = document.querySelector("#botonEjercicio4Reset");
 
   botonEjercicio4.addEventListener("click", (e) => {
-    window.open("./../infoEjercicio4.html", "test", params);
-    parrafo1.textContent = "aaaa";
-    infoNombre.textContent = inputNombre.value;
-    console.log(inputNombre.value);
-    console.log(inputApellidos.value);
-    console.log(inputEmail.value);
-    console.log(selectEdad.value);
-    prompt("Cuantos años tienes?", "100");
+    if (
+      inputNombre.value.length > 0 &&
+      inputApellidos.value.length > 0 &&
+      inputEmail.value.length > 0 &&
+      isNaN(inputNombre) &&
+      isNaN(inputApellidos) &&
+      isNaN(inputEmail)
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Informacion:",
+        showConfirmButton: true,
+        html: ` <ul class="list-group">
+        <li class="list-group-item">${inputNombre.value}</li>
+        <li class="list-group-item">${inputApellidos.value}</li>
+        <li class="list-group-item">${inputEmail.value}</li>
+        <li class="list-group-item">${selectEdad.value}</li>
+      </ul>
+    `,
+        timer: 10000,
+      });
+    }
+    console.log(isNaN(inputNombre));
+  });
+
+  botonEjercicio4Reset.addEventListener("click", (e) => {
+    inputNombre.value = "";
+    inputApellidos.value = "";
+    inputEmail.value = "";
+    selectEdad.value = "0";
   });
 
   // ----------- Ejercicio 5 ------------------

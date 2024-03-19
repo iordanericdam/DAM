@@ -1,38 +1,11 @@
-form {
-    width: 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  fieldset {
-    width: 20px;
-    border: 1px solid black;
-    padding: 10px;
-    margin: 0;
-  }
-  
-  legend {
-    font-weight: bold;
-    margin-bottom: 10px;
-    padding: 0 10px; 
-  }
-  
-  .input-group {
-    display: flex;
-    align-items: center;
-  }
-  
-  input {
-    height: 20px;
-    width: 500px;
-    margin-left: auto; 
-    align-self: flex-end; 
-  }
-  
-  label {
-    font-weight: bold;
-    margin-right: 10px; 
-  }
-  
+form{
+    width: 40%;
+    margin: auto;
+}
+
+input{
+    width: 60%;
+    text-align: left;
+}
+
+
