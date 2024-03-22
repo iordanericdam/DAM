@@ -1,12 +1,3 @@
-package gestionBiblioteca;
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
-public class main {
-
-	public static void main(String[] args) {
-
 //		Tenéis que realizar un aplicación para llevar a cabo la gestión de la biblioteca. Dicha aplicación podrán usarla dos tipos de usuarios:
 //
 //			1.- Administradores: Pueden ser varios y sus tareas son:
@@ -24,44 +15,53 @@ public class main {
 //			Ver sus préstamos en activo para ver los días que le quedan para la devolución.
 //			Los artículos que puede llevarse el cliente son: libros, revistas y películas (los atributos tenéis que pensarlos).
 
+package gestionBiblioteca;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class main {
+
+	public static void main(String[] args) {
+
 		Scanner sc = new Scanner(System.in);
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 
 //		Creacion de usuarios de administrador
-		Administrador admin1 = new Administrador("juan", "juan", "46660198Y", "Juan Gomez");
+		Administrador admin1 = new Administrador("admin", "admin", "46660198Y", "Admin");
 		listaUsuarios.add((Administrador) admin1);
 		Administrador admin2 = new Administrador("edurne", "edurne", "50322180C", "Edurne");
 		listaUsuarios.add((Administrador) admin2);
 
-		Usuario usuario1 = new Usuario("alberto", "alberto123", "80560285W", "Alberto Blein");
+		Usuario usuario1 = new Usuario("eric", "eric", "80560285W", "Eric Iordan", false);
 		listaUsuarios.add(usuario1);
-		Usuario usuario2 = new Usuario("david", "david123", "00188202Q", "David Gil");
+		Usuario usuario2 = new Usuario("david", "david", "00188202Q", "David Gil", false);
 		listaUsuarios.add(usuario2);
 
 		Usuario usu = new Usuario();
 
 		String nombreUsuario, pass, opcionS;
 		int opcion = 0;
-		
+		System.out.println("Bienvenido/a a la bibloteca Todo Libros");
 		do {
-			System.out.println("Bienvenido/a a la bibloteca Todo Libros");
+//			System.out.println("Recuerda que si es la primera vez que inicia sesion debe poner como contaseña el DNI/NIE en MAYUSCULAS");
 			System.out.print("Introduce tu nombre de usuario: ");
 			nombreUsuario = sc.nextLine().toLowerCase();
 			System.out.print("Introduce tu contrseña: ");
 			pass = sc.nextLine();
-			int comprobarCredenciales = Administrador.comprobarCredencialesAdmin(listaUsuarios, sc, nombreUsuario, pass);
-			switch (comprobarCredenciales) {
-			case 1:
+			usu = Administrador.comprobarCredenciales(listaUsuarios, sc, nombreUsuario, pass);
+			if (usu instanceof Administrador) {
 				do {
 					Administrador.mostrarMenuAdmin();
+					System.out.print("Opcion: ");
 					opcionS = sc.nextLine();
 					opcion = comprobarSiNumero(opcionS);
 					switch (opcion) {
 					case 1:
-						Usuario.altaUsuario(sc, listaUsuarios, usu);
+						Administrador.altaUsuario(sc, listaUsuarios, usu);
 						break;
 					case 2:
-						Usuario.bajaUsuario(sc, listaUsuarios);
+						Administrador.bajaUsuario(sc, listaUsuarios);
 						break;
 					case 3:
 						Usuario.consultarUsuarios(listaUsuarios);
@@ -75,36 +75,47 @@ public class main {
 					case 7:
 						break;
 					}
-
 				} while (opcion != 7);
-
-				break;
-			case -2:
-				System.out.println("Contraseña incorrecta");
-				break;
-			case -1:
-				comprobarCredenciales = Usuario.comprobarCredencialesUsuario(listaUsuarios, sc, nombreUsuario, pass);
-				switch (comprobarCredenciales) {
-				case 1:
-					do {
-						Usuario.mostrarMenuUsuario();
-						opcionS = sc.nextLine();
-						opcion = comprobarSiNumero(opcionS);
-					} while (opcion !=4);
-					
-					break;
-				case -2:
-					System.out.println("Contraseña incorrecta");
-					break;
-				case -3:
-					System.out.println("Usuario incorrecto");
-					break;
-				}
-			}
 			
+				} else if (!(usu instanceof Administrador)) {
+					try {
+						if(usu.isPrimerLogin()) {
+							Usuario.primerLogin(sc, usu);
+							sc.nextLine();
+						}
+						do {
+							Usuario.mostrarMenuUsuario();
+							System.out.print("Opcion: ");
+							opcionS = sc.nextLine();
+							opcion = comprobarSiNumero(opcionS);
+							switch (opcion) {
+							case 1:
+								break;
+							case 2:
+								break;
+							case 3:
+								break;
+							case 4:
+								break;
+								
+							}
+							
+						} while (opcion !=4);
+						
+					} catch (NullPointerException e) {
+					}
+				}
 		} while (true);
-
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	protected static int comprobarSiNumero(String numeroS) {
 		int opcion = 0;

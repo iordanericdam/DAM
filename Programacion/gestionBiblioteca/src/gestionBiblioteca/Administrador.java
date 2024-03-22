@@ -10,33 +10,6 @@ public class Administrador extends Usuario {
 	}
 	
 	
-	protected static int comprobarCredencialesAdmin(ArrayList<Usuario> listaUsuarios, Scanner sc, String nombreUsuario,
-			String pass) {
-		int i = 0, respuesta = 0;
-		boolean encontrado = false;
-
-		while (i < listaUsuarios.size() && !encontrado) {
-			Usuario usu = listaUsuarios.get(i);
-			if (usu instanceof Administrador) {
-				if (usu.getNombreUsuario().equals(nombreUsuario)) {
-					encontrado = true;
-					if (usu.getPass().equals(pass)) {
-						return 1;
-					} else {
-						respuesta = -2;
-					}
-				}
-			} else {
-				respuesta = -1;
-			}
-
-			i++;
-
-		}
-		return respuesta;
-
-	}
-	
 	protected static void mostrarMenuAdmin() {
 		System.out.println("╔════════════════════════════════════════╗");
 		System.out.println("║           Menu de Administrador        ║");
@@ -49,6 +22,80 @@ public class Administrador extends Usuario {
 		System.out.println("║ 6. Consultar prestamos.                ║");
 		System.out.println("║ 7. Cerrar sesion.                      ║");
 		System.out.println("╚════════════════════════════════════════╝");
+	}
+	
+	protected static Usuario comprobarCredenciales(ArrayList<Usuario> listaUsuarios, Scanner sc,
+			String nombreUsuario, String pass) {
+		boolean encontrado = false;
+		int i = 0, respuesta = 0;
+		while (i < listaUsuarios.size() && !encontrado) {
+			Usuario usu = listaUsuarios.get(i);
+			//Utilizo !(usu instanceof Administrador) para separar los usaurios de los administradores ya que todos son usuarios.
+//			Busco USUARIOS
+			if (!(usu instanceof Administrador)) {
+				if (usu.getNombreUsuario().equals(nombreUsuario)) {
+					encontrado = true;
+					if (usu.getPass().equals(pass)) {
+						System.out.println("Bienvenid@ " + usu.getNombreCompleto());
+						return usu;
+					} else {
+						System.out.println("Contraseña incorrecta");
+					}
+				} 
+//			Busco ADMINISTRADORES
+			} else if(usu instanceof Administrador ) {
+				if (usu.getNombreUsuario().equals(nombreUsuario)) {
+					encontrado = true;
+					if (usu.getPass().equals(pass)) {
+						System.out.println("Bienvenid@ " + usu.getNombreCompleto());
+						return usu;
+					} else {
+						System.out.println("Contraseña incorrecta!!");
+					}
+				} else {
+					respuesta = -3;
+				}
+				
+			}
+			i++;
+		}
+		if (respuesta == -3) {
+			System.out.println("Usuario no encontrado");
+		}
+		return null;
+
+		
+
+	}
+	
+	
+	protected static void bajaUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios) {
+		System.out.print("Introduce el DNI del usuario que desea eliminar: ");
+		String dni = sc.next();
+		int i = 0;
+		boolean encontrado = false, respuestaBool = false;
+		while (i < listaUsuarios.size() && !encontrado) {
+			Usuario usu = listaUsuarios.get(i);
+			if (usu instanceof Usuario) {
+				if (usu.getDni().equals(dni)) {
+					respuestaBool = main.obtenerRespuestaSiNo(sc,
+							"¿Seguro que dese eliminar a " + usu.getNombreCompleto() + "?");
+					encontrado = true;
+					if (respuestaBool) {
+						listaUsuarios.remove(i);
+					} else {
+						System.out.println("Vuelve caundo estes seguro");
+					}
+				}
+
+			}
+			sc.nextLine();
+			i++;
+		} 
+		
+		if (!encontrado) {
+			System.out.println("Usaurio no encontrado");
+		}
 	}
 	
 	

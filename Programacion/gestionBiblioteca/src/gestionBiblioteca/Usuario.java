@@ -6,12 +6,37 @@ import java.util.Scanner;
 public class Usuario {
 
 	String nombreUsuario, pass, dni, nombreCompleto;
+	boolean primerLogin = true;
 
 	public Usuario(String nombreUsuario, String pass, String dni, String nombreCompleto) {
 		this.nombreUsuario = nombreUsuario;
 		this.pass = pass;
 		this.dni = dni;
 		this.nombreCompleto = nombreCompleto;
+	}
+	
+	public Usuario(String nombreUsuario, String pass, String dni, String nombreCompleto, boolean primerLogin) {
+		this.nombreUsuario = nombreUsuario;
+		this.pass = pass;
+		this.dni = dni;
+		this.nombreCompleto = nombreCompleto;
+		this.primerLogin = primerLogin;
+	}
+	
+	
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+
+
+	public boolean isPrimerLogin() {
+		return primerLogin;
+	}
+
+	public void setPrimerLogin(boolean primerLogin) {
+		this.primerLogin = primerLogin;
 	}
 
 	public Usuario() {
@@ -40,28 +65,16 @@ public class Usuario {
 				+ nombreCompleto + "]";
 	}
 
-	protected static int comprobarCredencialesUsuario(ArrayList<Usuario> listaUsuarios, Scanner sc,
-			String nombreUsuario, String pass) {
-		boolean encontrado = false;
-		int i = 0, respuesta = 0;
-		while (i < listaUsuarios.size() && !encontrado) {
-			Usuario usu = listaUsuarios.get(i);
-			if (usu instanceof Usuario) {
-				if (usu.getNombreUsuario().equals(nombreUsuario)) {
-					encontrado = true;
-					if (usu.getPass().equals(pass)) {
-						return 1;
-					} else {
-						respuesta = -2;
-					}
-				} else {
-					respuesta = -3;
-				}
-			}
-			i++;
-		}
-
-		return respuesta;
+	
+	
+	protected static void primerLogin(Scanner sc, Usuario usu) {
+		boolean passCorrecta;
+		System.out.println("Para continuar primero debes cambiar la contraseña (debe tener minimo 8 caracteres): ");
+		do {
+			String passUsaurio = sc.next();
+			passCorrecta = main.comprobarString(passUsaurio, 8);
+			usu.setPass(passUsaurio);
+		} while (!passCorrecta);
 
 	}
 
@@ -132,41 +145,14 @@ public class Usuario {
 			System.out.println("Para iniciar sesion, debereas poner el nombre de usuario y tu dni como contraseña");
 			System.out.println("A continuacion tendra que cambiar la contraseña");
 
-			usu = new Usuario(nombreUsuario, dni, passProvisional, nombreCompleto);
+			usu = new Usuario(nombreUsuario, passProvisional, dni, nombreCompleto);
 			listaUsuarios.add(usu);
 
 		}
 
 	}
 
-	protected static void bajaUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios) {
-		System.out.print("Introduce el DNI del usuario que desea eliminar: ");
-		String dni = sc.next();
-		int i = 0;
-		boolean encontrado = false, respuestaBool = false;
-		while (i < listaUsuarios.size() && !encontrado) {
-			Usuario usu = listaUsuarios.get(i);
-			if (usu instanceof Usuario) {
-				if (usu.getDni().equals(dni)) {
-					respuestaBool = main.obtenerRespuestaSiNo(sc,
-							"¿Seguro que dese eliminar a " + usu.getNombreCompleto() + "?");
-					encontrado = true;
-					
-					if (respuestaBool) {
-						listaUsuarios.remove(i);
-					} else {
-						System.out.println("Vuelve caundo estes seguro");
-					}
-				}
 
-			}
-			sc.nextLine();
-			i++;
-		}
-		
-		
-
-	}
 
 	protected static boolean validarDNI(String dni) {
 		if (dni == null || dni.length() != 9) {
