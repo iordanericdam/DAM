@@ -26,6 +26,8 @@ public class main {
 
 		Scanner sc = new Scanner(System.in);
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		Usuario usu = new Usuario();
+		ArrayList<Articulo> listaArticulos = new ArrayList<Articulo>();
 
 //		Creacion de usuarios de administrador
 		Administrador admin1 = new Administrador("admin", "admin", "46660198Y", "Admin");
@@ -37,8 +39,6 @@ public class main {
 		listaUsuarios.add(usuario1);
 		Usuario usuario2 = new Usuario("david", "david", "00188202Q", "David Gil", false);
 		listaUsuarios.add(usuario2);
-
-		Usuario usu = new Usuario();
 
 		String nombreUsuario, pass, opcionS;
 		int opcion = 0;
@@ -67,6 +67,12 @@ public class main {
 						Usuario.consultarUsuarios(listaUsuarios);
 						break;
 					case 4:
+						do {
+							Articulo.menuArticulos();
+							System.out.print("Eligue la opcion para dar de alta: ");
+							opcionS = sc.nextLine();
+							opcion = comprobarSiNumero(opcionS);
+						} while (opcion != 4);
 						break;
 					case 5:
 						break;
@@ -76,46 +82,37 @@ public class main {
 						break;
 					}
 				} while (opcion != 7);
-			
-				} else if (!(usu instanceof Administrador)) {
-					try {
-						if(usu.isPrimerLogin()) {
-							Usuario.primerLogin(sc, usu);
-							sc.nextLine();
-						}
-						do {
-							Usuario.mostrarMenuUsuario();
-							System.out.print("Opcion: ");
-							opcionS = sc.nextLine();
-							opcion = comprobarSiNumero(opcionS);
-							switch (opcion) {
-							case 1:
-								break;
-							case 2:
-								break;
-							case 3:
-								break;
-							case 4:
-								break;
-								
-							}
-							
-						} while (opcion !=4);
-						
-					} catch (NullPointerException e) {
+
+			} else if (!(usu instanceof Administrador)) {
+				try {
+					if (usu.isPrimerLogin()) {
+						Usuario.primerLogin(sc, usu);
+						sc.nextLine();
 					}
+					do {
+						Usuario.mostrarMenuUsuario();
+						System.out.print("Opcion: ");
+						opcionS = sc.nextLine();
+						opcion = comprobarSiNumero(opcionS);
+						switch (opcion) {
+						case 1:
+							break;
+						case 2:
+							break;
+						case 3:
+							break;
+						case 4:
+							break;
+
+						}
+
+					} while (opcion != 4);
+
+				} catch (NullPointerException e) {
 				}
+			}
 		} while (true);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	protected static int comprobarSiNumero(String numeroS) {
 		int opcion = 0;

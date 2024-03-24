@@ -26,7 +26,7 @@ public class Formulario {
 			case 1:
 				do {
 					System.out.print("Introduce el nombre: ");
-					nombre = sc.next();
+					nombre = sc.nextLine();
 					nombreCorrecto = comprobarString(nombre, 3);
 				} while (!nombreCorrecto);
 				break;
@@ -99,7 +99,7 @@ public class Formulario {
 		return opcion;
 	}
 
-	private static boolean comprobarString(String variableS, int caracteres) {
+	private static  boolean comprobarString(String variableS, int caracteres) {
 		boolean correcto = false;
 		if (variableS.length() < caracteres) {
 			System.out.println("La longitud debe de ser minimo de " + caracteres + " caracteres");
