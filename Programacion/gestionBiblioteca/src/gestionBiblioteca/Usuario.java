@@ -61,8 +61,8 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [nombreUsuario=" + nombreUsuario + ", pass=" + pass + ", dni=" + dni + ", nombreCompleto="
-				+ nombreCompleto + "]";
+		return  "-----------------------"+ "\n" + "Nombre de usuario: " + nombreUsuario +"\n" +"Contraseña: " + pass +"\n"+ "DNI/NIE: " + dni +"\n"+ "Nombre completo: "
+				+ nombreCompleto;
 	}
 
 	
@@ -101,56 +101,7 @@ public class Usuario {
 
 	}
 
-	protected static void altaUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios, Usuario usu) {
-		String nombreCompleto, dni, passProvisional, nombreUsuario;
-		boolean entradaCorrecta = false, respuestaBool = false;
 
-		do {
-			System.out.print("Introduce el nombre completo del usuario: ");
-			nombreCompleto = sc.nextLine();
-		} while (!main.comprobarString(nombreCompleto, 5));
-		do {
-			System.out.print("Introduce el DNI o NIE: ");
-			dni = sc.next().toUpperCase();
-
-			if (!validarDNI(dni) && !validarNIE(dni)) {
-				System.out.println("El DNI o NIE introducidos son incorrectos.");
-				respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Deseas volver a escribirlo?");
-			} else {
-				respuestaBool = false;
-				entradaCorrecta = true;
-			}
-
-			if (comprobarUsaurio(dni, listaUsuarios)) {
-				respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Deseas escribir otro DNI?");
-				entradaCorrecta = false;
-			}
-
-			sc.nextLine();
-		} while (respuestaBool);
-
-		if (entradaCorrecta) {
-			do {
-				System.out.print("Introduce el nombre de usuario que desearia tener: ");
-				nombreUsuario = sc.next().toLowerCase();
-
-				if (Usuario.comprobarNombreUsuario(nombreUsuario, listaUsuarios)) {
-					System.out.println("El nombre de usuario ya esta en el sistema");
-				}
-				sc.nextLine();
-
-			} while (Usuario.comprobarNombreUsuario(nombreUsuario, listaUsuarios));
-
-			passProvisional = dni;
-			System.out.println("Para iniciar sesion, debereas poner el nombre de usuario y tu dni como contraseña");
-			System.out.println("A continuacion tendra que cambiar la contraseña");
-
-			usu = new Usuario(nombreUsuario, passProvisional, dni, nombreCompleto);
-			listaUsuarios.add(usu);
-
-		}
-
-	}
 
 
 
@@ -237,8 +188,7 @@ public class Usuario {
 		for (Usuario usu : listaUsuarios) {
 			if (!(usu instanceof Administrador)) {
 				System.out.println(usu.toString());
-			}
-
+			} 
 		}
 
 	}

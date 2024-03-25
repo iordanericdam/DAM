@@ -24,6 +24,7 @@ public class Administrador extends Usuario {
 		System.out.println("╚════════════════════════════════════════╝");
 	}
 	
+	
 	protected static Usuario comprobarCredenciales(ArrayList<Usuario> listaUsuarios, Scanner sc,
 			String nombreUsuario, String pass) {
 		boolean encontrado = false;
@@ -63,20 +64,71 @@ public class Administrador extends Usuario {
 			System.out.println("Usuario no encontrado");
 		}
 		return null;
+	}
+	
+	protected static void altaUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios, Usuario usu) {
+		String nombreCompleto, dni, passProvisional, nombreUsuario;
+		boolean entradaCorrecta = false, respuestaBool = false;
 
-		
+		do {
+			System.out.print("Introduce el nombre completo: ");
+			nombreCompleto = sc.nextLine();
+		} while (!main.comprobarString(nombreCompleto, 5));
+		do {
+			System.out.print("Introduce el DNI o NIE: ");
+			dni = sc.next().toUpperCase();
+
+			if (!validarDNI(dni) && !validarNIE(dni)) {
+				System.out.println("El DNI o NIE introducidos son incorrectos.");
+				respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Deseas volver a escribirlo?");
+			} else {
+				respuestaBool = false;
+				entradaCorrecta = true;
+			}
+
+			if (comprobarUsaurio(dni, listaUsuarios)) {
+				respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Deseas escribir otro DNI?");
+				entradaCorrecta = false;
+			}
+
+			sc.nextLine();
+		} while (respuestaBool);
+
+		if (entradaCorrecta) {
+			do {
+				System.out.print("Introduce el nombre de usuario que desearia tener: ");
+				nombreUsuario = sc.next().toLowerCase();
+
+				if (Usuario.comprobarNombreUsuario(nombreUsuario, listaUsuarios)) {
+					System.out.println("El nombre de usuario ya esta en el sistema");
+				}
+				sc.nextLine();
+
+			} while (Usuario.comprobarNombreUsuario(nombreUsuario, listaUsuarios));
+
+			passProvisional = dni;
+			System.out.println("Para iniciar sesion, debereas poner el nombre de usuario y tu dni como contraseña");
+			System.out.println("A continuacion tendra que cambiar la contraseña");
+
+			usu = new Usuario(nombreUsuario, passProvisional, dni, nombreCompleto);
+			listaUsuarios.add(usu);
+
+		}
 
 	}
 	
+
+	
 	
 	protected static void bajaUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios) {
+		String dni;
 		System.out.print("Introduce el DNI del usuario que desea eliminar: ");
-		String dni = sc.next();
+		dni = sc.nextLine();
 		int i = 0;
 		boolean encontrado = false, respuestaBool = false;
 		while (i < listaUsuarios.size() && !encontrado) {
 			Usuario usu = listaUsuarios.get(i);
-			if (usu instanceof Usuario) {
+			if (!(usu instanceof Administrador)) {
 				if (usu.getDni().equals(dni)) {
 					respuestaBool = main.obtenerRespuestaSiNo(sc,
 							"¿Seguro que dese eliminar a " + usu.getNombreCompleto() + "?");
