@@ -67,8 +67,6 @@ public class main {
 		listaArticulos.add(pelicula2);
 		listaArticulos.add(pelicula3);
 
-		Usuario usu = new Usuario();
-
 		String nombreUsuario, pass, opcionS;
 		int opcion = 0;
 		System.out.println("Bienvenido/a a la bibloteca Todo Libros");
