@@ -54,8 +54,7 @@ public class Revista extends Articulo {
     
     @Override
     public String toString() {
-        return String.format("----------Revista-------------- %n" + 
-        					 "Nombre: %s%n" +
+        return String.format("Nombre: %s%n" +
                              "ISSN: %d%n" +
                              "Editor: %s%n" +
                              "Tematica: %s%n" +

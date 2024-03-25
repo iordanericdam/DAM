@@ -102,7 +102,7 @@ public class Articulo {
 				ISSN = main.comprobarSiNumero(ISSNs);
 				sc.nextLine();
 			} while (ISSN == 0);
-			
+
 			System.out.print("Introduce el/los editor/es de la revista: ");
 			editor = sc.nextLine();
 			do {
@@ -130,12 +130,84 @@ public class Articulo {
 				clasificacionEdad = main.comprobarSiNumero(clasificacionEdadS);
 				sc.nextLine();
 			} while (clasificacionEdad == 0);
-			
+
 			art = new Pelicula(diasParaDevolucion, idioma, nombre, disponible, director, genero, clasificacionEdad);
 			listaArticulos.add((Pelicula) art);
 
 			break;
 
+		}
+
+	}
+
+	protected static void bajaArticulo(int tipo, ArrayList<Articulo> listaArticulos, Scanner sc) {
+		String opcionS;
+		int opcion, indiceMayor = -1;
+		boolean respuestaBool;
+		switch (tipo) {
+		case 1:
+			for (int i = 0; i < listaArticulos.size(); i++) {
+				Articulo art = listaArticulos.get(i);
+				if (art instanceof Libro) {
+					System.out.println("----------Libro " + i + "----------");
+					System.out.println(art.toString());
+					indiceMayor = i;
+				}
+				
+				if (i == (listaArticulos.size() -1) && indiceMayor != -1) {
+					System.out.print("Introduce el nombre del libro que desa eliminar PERMANENTEMENTE: ");
+					opcionS = sc.next();
+					opcion = main.comprobarSiNumero(opcionS);
+					if (opcion <= indiceMayor) {
+						art = listaArticulos.get(opcion);
+						System.out.println();
+						sc.nextLine();
+						respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Esta seguro que dese elimnar el libro "+ art.getNombre());
+						if (respuestaBool) {
+							listaArticulos.remove(opcion);
+							sc.nextLine();
+						} else {
+							System.out.println("Saliendo....");
+							sc.nextLine();
+						}
+					} else {
+						System.out.println("El numero introducido no es una opcion valida");
+						sc.nextLine();
+					}
+					
+				} 
+			}
+			
+			if (indiceMayor == -1) {
+				System.out.println("Actualente no disponemos de libros en el sistema");
+			}
+			
+
+			break;
+		case 2:
+			for (int i = 1; i < listaArticulos.size(); i++) {
+				Articulo art = listaArticulos.get(i);
+				if (art instanceof Revista) {
+					System.out.println("----------Revista " + i + "----------");
+					System.out.println(art.toString());
+
+				}
+			}
+
+			break;
+		case 3:
+			for (int i = 1; i < listaArticulos.size(); i++) {
+				Articulo art = listaArticulos.get(i);
+				if (art instanceof Pelicula) {
+					System.out.println("----------Pelicula " + i + "----------");
+					System.out.println(art.toString());
+
+				}
+			}
+			break;
+		case 4:
+			System.out.println("Saliendo...");
+			break;
 		}
 
 	}
@@ -149,6 +221,25 @@ public class Articulo {
 		System.out.println("║ 3. Película                                ║");
 		System.out.println("║ 4. Salir                                   ║");
 		System.out.println("╚════════════════════════════════════════════╝");
+	}
+
+	protected static int obtenerTipoArtiuclo(Scanner sc) {
+		String opcionS;
+		int opcion;
+		do {
+
+			Articulo.mostrarMenuArticulos();
+			opcionS = sc.nextLine();
+			opcion = main.comprobarSiNumero(opcionS);
+
+			if (opcion != 0 && opcion != 1 && opcion != 2 && opcion != 3 && opcion != 4) {
+				System.out.println("Debes introducir un numero del 1 al 4");
+			}
+
+		} while (opcion != 1 && opcion != 2 && opcion != 3 && opcion != 4);
+
+		return opcion;
+
 	}
 
 	protected static void consultarArticulos(ArrayList<Articulo> listaArticulos) {
