@@ -1,6 +1,7 @@
 package gestionBiblioteca;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Articulo {
@@ -83,7 +84,7 @@ public class Articulo {
 				ISBN = main.comprobarSiNumero(ISBNs);
 				sc.nextLine();
 			} while (ISBN == 0);
-			System.out.print("Introduce el/los autor/es del libreo: ");
+			System.out.print("Introduce el/los autor/es del libro: ");
 			autor = sc.nextLine();
 			do {
 				Libro.mostrarMenuGeneros();
@@ -140,93 +141,42 @@ public class Articulo {
 
 	}
 	
-	protected static void bajaArticulo(int tipo) {
-		switch (tipo) {
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			System.out.println("Saliendo...");
-			break;
-			
-		}
+	protected static void darDeBajaArticulo(ArrayList<Articulo> listaArticulos, Class<? extends Articulo> tipoArticulo, Scanner sc) {
+        int indiceMayor = -1, indiceMenor = 0;
+        for (int i = 0; i < listaArticulos.size(); i++) {
+            Articulo art = listaArticulos.get(i);
+            if (tipoArticulo.isInstance(art)) {
+                System.out.println("----------" + tipoArticulo.getSimpleName() + " " + i + "----------");
+                System.out.println(art.toString());
+                indiceMayor = i;
+                indiceMenor++;
+            }
+            if (i == (listaArticulos.size() - 1) && indiceMayor != -1) {
+                System.out.print("Introduce el nombre del " + tipoArticulo.getSimpleName().toLowerCase() + " que desea eliminar PERMANENTEMENTE: ");
+                String opcionS = sc.next();
+                sc.nextLine();
+                int opcion = main.comprobarSiNumero(opcionS);
+                if (opcion != -1 && opcion <= indiceMayor && opcion >= (indiceMayor-indiceMenor)+1) {
+                    art = listaArticulos.get(opcion);
+                    sc.nextLine();
+                    boolean respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Está seguro que desea eliminar el " + tipoArticulo.getSimpleName().toLowerCase() + " " + art.getNombre() + "?");
+                    if (respuestaBool) {
+                        listaArticulos.remove(opcion);
+                        System.out.println("El " + tipoArticulo.getSimpleName().toLowerCase() + " ha sido eliminado correctamente.");
+                    } else {
+                        System.out.println("Cancelando eliminación de " + tipoArticulo.getSimpleName().toLowerCase() + "...");
+                    }
+                } else {
+                    System.out.println("El número introducido no es una opción válida.");
+                }
+            }
+        }
 
-	}
-
-	protected static void bajaArticulo(int tipo, ArrayList<Articulo> listaArticulos, Scanner sc) {
-		String opcionS;
-		int opcion, indiceMayor = -1;
-		boolean respuestaBool;
-		switch (tipo) {
-		case 1:
-			for (int i = 0; i < listaArticulos.size(); i++) {
-				Articulo art = listaArticulos.get(i);
-				if (art instanceof Libro) {
-					System.out.println("----------Libro " + i + "----------");
-					System.out.println(art.toString());
-					indiceMayor = i;
-				}
-				
-				if (i == (listaArticulos.size() -1) && indiceMayor != -1) {
-					System.out.print("Introduce el nombre del libro que desa eliminar PERMANENTEMENTE: ");
-					opcionS = sc.next();
-					opcion = main.comprobarSiNumero(opcionS);
-					if (opcion <= indiceMayor) {
-						art = listaArticulos.get(opcion);
-						System.out.println();
-						sc.nextLine();
-						respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Esta seguro que dese elimnar el libro "+ art.getNombre());
-						if (respuestaBool) {
-							listaArticulos.remove(opcion);
-							sc.nextLine();
-						} else {
-							System.out.println("Saliendo....");
-							sc.nextLine();
-						}
-					} else {
-						System.out.println("El numero introducido no es una opcion valida");
-						sc.nextLine();
-					}
-					
-				} 
-			}
-			
-			if (indiceMayor == -1) {
-				System.out.println("Actualente no disponemos de libros en el sistema");
-			}
-			
-
-			break;
-		case 2:
-			for (int i = 1; i < listaArticulos.size(); i++) {
-				Articulo art = listaArticulos.get(i);
-				if (art instanceof Revista) {
-					System.out.println("----------Revista " + i + "----------");
-					System.out.println(art.toString());
-
-				}
-			}
-
-			break;
-		case 3:
-			for (int i = 1; i < listaArticulos.size(); i++) {
-				Articulo art = listaArticulos.get(i);
-				if (art instanceof Pelicula) {
-					System.out.println("----------Pelicula " + i + "----------");
-					System.out.println(art.toString());
-
-				}
-			}
-			break;
-		case 4:
-			System.out.println("Saliendo...");
-			break;
-		}
-
-	}
+        if (indiceMayor == -1) {
+            System.out.println("Actualmente no hay " + tipoArticulo.getSimpleName().toLowerCase() + "s en el sistema.");
+        }
+    }
+	
 
 	protected static void mostrarMenuArticulos() {
 		System.out.println("╔════════════════════════════════════════════╗");
@@ -245,20 +195,18 @@ public class Articulo {
 		do {
 
 			Articulo.mostrarMenuArticulos();
+			System.out.print("Eligue una opcion: ");
 			opcionS = sc.nextLine();
 			opcion = main.comprobarSiNumero(opcionS);
-
 			if (opcion != 0 && opcion != 1 && opcion != 2 && opcion != 3 && opcion != 4) {
 				System.out.println("Debes introducir un numero del 1 al 4");
 			}
-
 		} while (opcion != 1 && opcion != 2 && opcion != 3 && opcion != 4);
-
 		return opcion;
 
 	}
 
-	protected static void consultarArticulos(ArrayList<Articulo> listaArticulos) {
+	protected static void consultarArticulosALL(ArrayList<Articulo> listaArticulos) {
 		for (Articulo art : listaArticulos) {
 			if (art instanceof Libro) {
 				System.out.println(art.toString());
@@ -270,4 +218,22 @@ public class Articulo {
 		}
 
 	}
+	
+	
+	protected static ArrayList<Integer> consultarArticulos(ArrayList<Articulo> listaArticulos, Class<? extends Articulo> tipoArticulo) {
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		for (int i = 0; i< listaArticulos.size();i++) {
+			Articulo art = listaArticulos.get(i);
+			if (tipoArticulo.isInstance(art)) {
+				System.out.println("----------" + tipoArticulo.getSimpleName() + " " + i + "----------");
+				System.out.println(art.toString());
+				indices.add(i);
+			}
+		}
+		
+		return indices;
+
+	}
+	
+	
 }

@@ -27,8 +27,10 @@ public class main {
 		Scanner sc = new Scanner(System.in);
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		ArrayList<Articulo> listaArticulos = new ArrayList<Articulo>();
+		ArrayList<Prestamo> listaPrestamos = new ArrayList<Prestamo>();
 		Articulo art = new Articulo();
 		Usuario usu = new Usuario();
+		Prestamo pres = new Prestamo();
 
 //		Creacion de usuarios de administrador
 		Administrador admin1 = new Administrador("admin", "admin", "46660198Y", "Admin");
@@ -106,8 +108,19 @@ public class main {
 						do {
 							opcion = Articulo.obtenerTipoArtiuclo(sc);
 							if (opcion != 4) {
-								Articulo.bajaArticulo(opcion, listaArticulos, sc);
-							}
+								switch (opcion) {
+								case 1:
+									Articulo.darDeBajaArticulo(listaArticulos, Libro.class, sc);
+									break;
+								case 2:
+									Articulo.darDeBajaArticulo(listaArticulos, Revista.class, sc);
+									break;
+								case 3:
+									Articulo.darDeBajaArticulo(listaArticulos, Pelicula.class, sc);
+									break;	
+								}
+								
+							} 
 						} while (opcion != 4);
 						break;
 					case 6:
@@ -118,7 +131,7 @@ public class main {
 						do {
 
 						} while (opcion != 4);
-						Articulo.consultarArticulos(listaArticulos);
+						Articulo.consultarArticulosALL(listaArticulos);
 						break;
 					}
 				} while (opcion != 7);
@@ -136,10 +149,47 @@ public class main {
 						opcion = comprobarSiNumero(opcionS);
 						switch (opcion) {
 						case 1:
+							opcion = Articulo.obtenerTipoArtiuclo(sc);
+							switch (opcion) {
+							case 1:
+								Prestamo.realizarPrestamo(sc,usu, listaArticulos,  Libro.class, listaPrestamos);
+								break;
+							case 2:
+								Prestamo.realizarPrestamo(sc,usu, listaArticulos,  Revista.class, listaPrestamos);
+								break;
+							case 3:
+								Prestamo.realizarPrestamo(sc,usu, listaArticulos,  Pelicula.class, listaPrestamos);
+								break;	
+							case 4:
+								System.out.println("Saliendo...");
+								break;
+							}
 							break;
 						case 2:
+							Prestamo.devolverPrestamo(listaPrestamos, listaArticulos, usu, sc);
 							break;
 						case 3:
+							do {
+								System.out.println("¿Que prestamo desea visualizar?");
+								Prestamo.mostrarPrestamosMenu();
+								opcionS = sc.next();
+								opcion = comprobarSiNumero(opcionS);
+								switch (opcion) {
+								case 1:
+									System.out.println("Prestamos ACTIVOS");
+									Prestamo.consultarPrestamosUsuarioActivos(listaPrestamos, usu);
+									break;
+								case 2:
+									System.out.println("Prestamos");
+									Prestamo.consultarPrestamosUsuario(listaPrestamos, usu);
+									break;
+								case 3:
+									System.out.println("Saliendo...");
+									break;
+								}
+								
+							} while (opcion != 3);
+							
 							break;
 						case 4:
 							break;
@@ -155,7 +205,7 @@ public class main {
 	}
 
 	protected static int comprobarSiNumero(String numeroS) {
-		int opcion = 0;
+		int opcion = -1;
 		try {
 			opcion = Integer.parseInt(numeroS);
 			if (opcion < 0) {
