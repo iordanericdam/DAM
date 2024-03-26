@@ -20,7 +20,6 @@ package gestionBiblioteca;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class main {
 
 	public static void main(String[] args) {
@@ -41,32 +40,33 @@ public class main {
 		listaUsuarios.add(usuario1);
 		Usuario usuario2 = new Usuario("david", "david", "00188202Q", "David Gil", false);
 		listaUsuarios.add(usuario2);
-		
-        // Crear libros
-        Libro libro1 = new Libro(14, "Español", "Cien años de soledad", true, 4652, "Gabriel García Márquez", 4);
-        Libro libro2 = new Libro(21, "Inglés", "To Kill a Mockingbird", true, 36524, "Harper Lee", 12);
-        Libro libro3 = new Libro(10, "Francés", "Le Petit Prince", true, 789651, "Antoine de Saint-Exupéry", 5);
 
-        // Crear revistas
-        Revista revista1 = new Revista(7, "Español", "National Geographic", true, 112255, "National Geographic Society", 1);
-        Revista revista2 = new Revista(7, "Inglés", "Scientific American", true, 885533, "Springer Nature", 2);
-        Revista revista3 = new Revista(7, "Francés", "Paris Match", true, 99966, "Lagarde Family", 6);
+		// Crear libros
+		Libro libro1 = new Libro(14, "Español", "Cien años de soledad", true, 4652, "Gabriel García Márquez", 4);
+		Libro libro2 = new Libro(21, "Inglés", "To Kill a Mockingbird", true, 36524, "Harper Lee", 12);
+		Libro libro3 = new Libro(10, "Francés", "Le Petit Prince", true, 789651, "Antoine de Saint-Exupéry", 5);
 
-        // Crear películas
-        Pelicula pelicula1 = new Pelicula(3, "Inglés", "The Shawshank Redemption", true, "Frank Darabont", 5, 6);
-        Pelicula pelicula2 = new Pelicula(3, "Español", "El Laberinto del Fauno", true, "Guillermo del Toro", 2, 3);
-        Pelicula pelicula3 = new Pelicula(3, "Inglés", "Inception", true, "Christopher Nolan", 4, 55);
+		// Crear revistas
+		Revista revista1 = new Revista(7, "Español", "National Geographic", true, 112255, "National Geographic Society",
+				1);
+		Revista revista2 = new Revista(7, "Inglés", "Scientific American", true, 885533, "Springer Nature", 2);
+		Revista revista3 = new Revista(7, "Francés", "Paris Match", true, 99966, "Lagarde Family", 6);
 
-        // Añadir los artículos a la lista
-        listaArticulos.add(libro1);
-        listaArticulos.add(libro2);
-        listaArticulos.add(libro3);
-        listaArticulos.add(revista1);
-        listaArticulos.add(revista2);
-        listaArticulos.add(revista3);
-        listaArticulos.add(pelicula1);
-        listaArticulos.add(pelicula2);
-        listaArticulos.add(pelicula3);
+		// Crear películas
+		Pelicula pelicula1 = new Pelicula(3, "Inglés", "The Shawshank Redemption", true, "Frank Darabont", 5, 6);
+		Pelicula pelicula2 = new Pelicula(3, "Español", "El Laberinto del Fauno", true, "Guillermo del Toro", 2, 3);
+		Pelicula pelicula3 = new Pelicula(3, "Inglés", "Inception", true, "Christopher Nolan", 4, 55);
+
+		// Añadir los artículos a la lista
+		listaArticulos.add(libro1);
+		listaArticulos.add(libro2);
+		listaArticulos.add(libro3);
+		listaArticulos.add(revista1);
+		listaArticulos.add(revista2);
+		listaArticulos.add(revista3);
+		listaArticulos.add(pelicula1);
+		listaArticulos.add(pelicula2);
+		listaArticulos.add(pelicula3);
 
 		String nombreUsuario, pass, opcionS;
 		int opcion = 0;
@@ -96,23 +96,30 @@ public class main {
 						break;
 					case 4:
 						do {
-							Articulo.mostrarMenuArticulos();
-							opcionS = sc.nextLine();
-							opcion = comprobarSiNumero(opcionS);
+							opcion = Articulo.obtenerTipoArtiuclo(sc);
 							if (opcion != 4) {
 								Articulo.altaArticulo(opcion, listaArticulos, art, sc);
 							}
 						} while (opcion != 4);
 						break;
 					case 5:
+						do {
+							opcion = Articulo.obtenerTipoArtiuclo(sc);
+							if (opcion != 4) {
+								Articulo.bajaArticulo(opcion, listaArticulos, sc);
+							}
+						} while (opcion != 4);
 						break;
 					case 6:
 						break;
 					case 7:
 						break;
 					case 8:
+						do {
+
+						} while (opcion != 4);
 						Articulo.consultarArticulos(listaArticulos);
-						break;	
+						break;
 					}
 				} while (opcion != 7);
 
@@ -146,9 +153,6 @@ public class main {
 			}
 		} while (true);
 	}
-	
-
-	
 
 	protected static int comprobarSiNumero(String numeroS) {
 		int opcion = 0;
@@ -156,7 +160,7 @@ public class main {
 			opcion = Integer.parseInt(numeroS);
 			if (opcion < 0) {
 				System.out.println("Debes introducir un número mayor o igual que 0.");
-				opcion = 0;
+				opcion = -1;
 			}
 		} catch (Exception e) {
 			System.out.println("Debes introducir un numero.");
@@ -193,5 +197,7 @@ public class main {
 		}
 		return respuesta;
 	}
+
+
 
 }

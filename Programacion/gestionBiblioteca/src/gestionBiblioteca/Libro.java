@@ -82,8 +82,7 @@ public class Libro extends Articulo {
 	
     @Override
     public String toString() {
-        return String.format("---------Libro----------- %n" + 
-        					"Nombre: %s%n" +
+        return String.format("Nombre: %s%n" +
                              "ISBN: %d%n" +
                              "Autor: %s%n" +
                              "Género: %s%n" +

@@ -105,8 +105,7 @@ public class Pelicula  extends Articulo{
 	
     @Override
     public String toString() {
-        return String.format("---------Pelicula------------- %n" + 
-        		        	 "Nombre: %s%n" +
+        return String.format("Nombre: %s%n" +
                              "Director: %s%n" +
                              "Género: %s%n" +
                              "Clasificación por Edad: %s%n" +
