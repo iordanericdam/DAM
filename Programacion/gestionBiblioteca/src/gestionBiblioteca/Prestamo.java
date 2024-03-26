@@ -5,14 +5,15 @@ import java.util.Scanner;
 
 public class Prestamo {
 
-	int diaPrestamo;
+	int diaPrestamo, diasParDevolver;
 	String dniUsuario, PKarticulo;
 	boolean devuelto = false;
 
-	public Prestamo(int diaPrestamo, String PKarticulo, String dniUsuario) {
+	public Prestamo(int diaPrestamo, String PKarticulo, String dniUsuario, int diasParDevolver) {
 		this.diaPrestamo = diaPrestamo;
 		this.PKarticulo = PKarticulo;
 		this.dniUsuario = dniUsuario;
+		this.diasParDevolver = diasParDevolver;
 	}
 
 	public Prestamo() {
@@ -40,7 +41,7 @@ public class Prestamo {
 
 	protected static void realizarPrestamo(Scanner sc, Usuario usu, ArrayList<Articulo> listaArticulos,
 			Class<? extends Articulo> tipoArticulo, ArrayList<Prestamo> listaPrestamos) {
-		int indiceMayor = -1, indiceMenor = 0, diaActual = -1;
+		int indiceMayor = -1, indiceMenor = 0, diaActual = -1, diasParDevolver;
 		String dni, PKarticulo;
 		for (int i = 0; i < listaArticulos.size(); i++) {
 			Articulo art = listaArticulos.get(i);
@@ -59,9 +60,10 @@ public class Prestamo {
 				String opcionS = sc.next();
 				sc.nextLine();
 				int opcion = main.comprobarSiNumero(opcionS);
+				sc.nextLine();
 				if (opcion != -1 && opcion <= indiceMayor && opcion >= (indiceMayor - indiceMenor) + 1) {
 					art = listaArticulos.get(opcion);
-					sc.nextLine();
+					
 					boolean respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Está seguro que desea llevarse el "
 							+ tipoArticulo.getSimpleName().toLowerCase() + " " + art.getNombre() + "?");
 					if (respuestaBool) {
@@ -69,6 +71,7 @@ public class Prestamo {
 						art.setDisponible(false);
 						dni = usu.getDni();
 						PKarticulo = art.getNombre();
+						diasParDevolver = art.getDiasParaDevolver();
 						sc.nextLine();
 						do {
 							System.out.println("Introduce el dia actual: ");
@@ -79,7 +82,7 @@ public class Prestamo {
 
 						System.out.println(
 								"Tiene " + art.getDiasParaDevolver() + " dias para devolverlo, sino sera penalizado.");
-						Prestamo p1 = new Prestamo(diaActual, PKarticulo, dni);
+						Prestamo p1 = new Prestamo(diaActual, PKarticulo, dni, diasParDevolver);
 						listaPrestamos.add(p1);
 						System.out.println("El/La " + tipoArticulo.getSimpleName().toLowerCase()
 								+ " ha sido prestado correctamente.");
@@ -145,6 +148,14 @@ public class Prestamo {
 		}
 
 	}
+	
+	protected static void consultarPrestamosActivos(ArrayList<Prestamo> listaPrestamos) {
+		for (Prestamo pres : listaPrestamos) {
+			if(!pres.devuelto) {
+				System.out.println(pres.toString());
+			}
+		}
+	}
 
 	protected static void consultarPrestamosUsuario(ArrayList<Prestamo> listaPrestamos, Usuario usu) {
 		for (Prestamo pres : listaPrestamos) {
@@ -175,12 +186,64 @@ public class Prestamo {
 	    System.out.println("║ 3. Salir                  ║");
 	    System.out.println("╚═══════════════════════════╝");
 	}
+	
+	protected static void consultarPrestamosUsuario(Scanner sc, ArrayList<Prestamo> listaPrestamos, Usuario usu) {
+		String opcionS;
+		int opcion;
+		do {
+			System.out.println("¿Que prestamo desea visualizar?");
+			Prestamo.mostrarPrestamosMenu();
+			opcionS = sc.next();
+			opcion = main.comprobarSiNumero(opcionS);
+			switch (opcion) {
+			case 1:
+				System.out.println("Prestamos ACTIVOS");
+				Prestamo.consultarPrestamosUsuarioActivos(listaPrestamos, usu);
+				break;
+			case 2:
+				System.out.println("Prestamos");
+				Prestamo.consultarPrestamosUsuario(listaPrestamos, usu);
+				break;
+			case 3:
+				System.out.println("Saliendo...");
+				break;
+			}
+			
+		} while (opcion != 3);
+
+	}
+	
+	protected static void consultarPrestamosAdministrador(Scanner sc, ArrayList<Prestamo> listaPrestamos) {
+		String opcionS;
+		int opcion;
+		do {
+			System.out.println("¿Que prestamo desea visualizar?");
+			Prestamo.mostrarPrestamosMenu();
+			opcionS = sc.next();
+			opcion = main.comprobarSiNumero(opcionS);
+			switch (opcion) {
+			case 1:
+				System.out.println("Prestamos ACTIVOS");
+				consultarPrestamosActivos(listaPrestamos);
+				break;
+			case 2:
+				System.out.println("Prestamos");
+				consultarPrestamosALL(listaPrestamos);
+				break;
+			case 3:
+				System.out.println("Saliendo...");
+				break;
+			}
+			
+		} while (opcion != 3);
+
+	}
 
 	@Override
 	public String toString() {
 		return String.format(
-				"Dia del prestamo: %d%n" + "DNI del usuario; %s%n" + "Articulo prestado: %s%n" + "Esta devuelo: %s%n",
-				getDiaPrestamo(), getDniUsuario(), getPKarticulo(), isDevuelto() ? "Sí" : "No");
+				"Dia del prestamo: %d%n" + "DNI del usuario; %s%n" + "Articulo prestado: %s%n" + "Esta devuelo: %s%n" + "Dias para devolver: %s%n",
+				getDiaPrestamo(), getDniUsuario(), getPKarticulo(), isDevuelto() ? "Sí" : "No", diasParDevolver);
 
 	}
 

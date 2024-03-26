@@ -150,6 +150,24 @@ public class Administrador extends Usuario {
 		}
 	}
 	
+	protected static void penalizarUsuario(Scanner sc, ArrayList<Prestamo> listaPrestamos) {
+		int diaActual;
+		String diaActualS;
+		System.out.print("Introduce el dia actual: ");
+		diaActualS = sc.next();
+		diaActual = main.comprobarSiNumero(diaActualS);
+		
+		for (Prestamo pres : listaPrestamos) {
+			if (diaActual > pres.diaPrestamo + pres.diasParDevolver) {
+				System.out.println("El usuario con DNI "+ pres.getDniUsuario() + " sera penalizado por el articulo " + pres.getPKarticulo() + "ya que lo tendria que haber devuelto hace "+ (diaActual - ( pres.diaPrestamo + pres.diasParDevolver)) + " dia/s");
+				sc.nextLine();
+			}
+				
+		}
+		
+		
+	}
+	
 	
 
 }

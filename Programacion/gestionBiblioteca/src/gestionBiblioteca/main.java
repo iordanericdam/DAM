@@ -94,7 +94,7 @@ public class main {
 						Administrador.bajaUsuario(sc, listaUsuarios);
 						break;
 					case 3:
-						Usuario.consultarUsuarios(listaUsuarios);
+						Administrador.penalizarUsuario(sc, listaPrestamos);
 						break;
 					case 4:
 						do {
@@ -124,6 +124,7 @@ public class main {
 						} while (opcion != 4);
 						break;
 					case 6:
+						Prestamo.consultarPrestamosAdministrador(sc, listaPrestamos);
 						break;
 					case 7:
 						break;
@@ -169,27 +170,7 @@ public class main {
 							Prestamo.devolverPrestamo(listaPrestamos, listaArticulos, usu, sc);
 							break;
 						case 3:
-							do {
-								System.out.println("¿Que prestamo desea visualizar?");
-								Prestamo.mostrarPrestamosMenu();
-								opcionS = sc.next();
-								opcion = comprobarSiNumero(opcionS);
-								switch (opcion) {
-								case 1:
-									System.out.println("Prestamos ACTIVOS");
-									Prestamo.consultarPrestamosUsuarioActivos(listaPrestamos, usu);
-									break;
-								case 2:
-									System.out.println("Prestamos");
-									Prestamo.consultarPrestamosUsuario(listaPrestamos, usu);
-									break;
-								case 3:
-									System.out.println("Saliendo...");
-									break;
-								}
-								
-							} while (opcion != 3);
-							
+							Prestamo.consultarPrestamosUsuario(sc, listaPrestamos, usu);
 							break;
 						case 4:
 							break;
