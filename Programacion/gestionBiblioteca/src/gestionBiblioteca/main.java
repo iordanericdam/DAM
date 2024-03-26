@@ -29,6 +29,7 @@ public class main {
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		ArrayList<Articulo> listaArticulos = new ArrayList<Articulo>();
 		Articulo art = new Articulo();
+		Usuario usu = new Usuario();
 
 //		Creacion de usuarios de administrador
 		Administrador admin1 = new Administrador("admin", "admin", "46660198Y", "Admin");
@@ -102,7 +103,6 @@ public class main {
 								Articulo.altaArticulo(opcion, listaArticulos, art, sc);
 							}
 						} while (opcion != 4);
-						
 						break;
 					case 5:
 						break;
@@ -112,7 +112,6 @@ public class main {
 						break;
 					case 8:
 						Articulo.consultarArticulos(listaArticulos);
-						
 						break;	
 					}
 				} while (opcion != 7);
