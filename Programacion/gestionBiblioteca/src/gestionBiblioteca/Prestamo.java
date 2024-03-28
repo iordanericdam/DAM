@@ -58,9 +58,7 @@ public class Prestamo {
 				System.out.print("Introduce el numero del/de la " + tipoArticulo.getSimpleName().toLowerCase()
 						+ " que desea llevarse prestado: ");
 				String opcionS = sc.next();
-				sc.nextLine();
 				int opcion = main.comprobarSiNumero(opcionS);
-				sc.nextLine();
 				if (opcion != -1 && opcion <= indiceMayor && opcion >= (indiceMayor - indiceMenor) + 1) {
 					art = listaArticulos.get(opcion);
 					
@@ -122,6 +120,7 @@ public class Prestamo {
 						boolean respuestaBool = main.obtenerRespuestaSiNo(sc,
 								"¿Está seguro que desea devolver " + pres.getPKarticulo() + "?");
 						if (respuestaBool) {
+							sc.nextLine();
 							pres.setDevuelto(true);
 
 							for (Articulo art : listaArticulos) {
@@ -132,6 +131,7 @@ public class Prestamo {
 
 						} else {
 							System.out.println("Cancelando...");
+							sc.nextLine();
 						}
 					}
 
@@ -145,6 +145,7 @@ public class Prestamo {
 	protected static void consultarPrestamosALL(ArrayList<Prestamo> listaPrestamos) {
 		for (Prestamo pres : listaPrestamos) {
 			System.out.println(pres.toString());
+			System.out.println("----------------------");
 		}
 
 	}
@@ -153,6 +154,7 @@ public class Prestamo {
 		for (Prestamo pres : listaPrestamos) {
 			if(!pres.devuelto) {
 				System.out.println(pres.toString());
+				System.out.println("----------------------");
 			}
 		}
 	}
@@ -161,6 +163,7 @@ public class Prestamo {
 		for (Prestamo pres : listaPrestamos) {
 			if (pres.getDniUsuario().equals(usu.getDni())) {
 				System.out.println(pres.toString());
+				System.out.println("----------------------");
 			}
 
 		}
@@ -172,6 +175,7 @@ public class Prestamo {
 			if (pres.getDniUsuario().equals(usu.getDni())) {
 				if (!pres.isDevuelto()) {
 					System.out.println(pres.toString());
+					System.out.println("----------------------");
 				}
 			}
 		}
