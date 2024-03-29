@@ -158,6 +158,10 @@ public class Articulo {
                 int opcion = main.comprobarSiNumero(opcionS);
                 if (opcion != -1 && opcion <= indiceMayor && opcion >= (indiceMayor-indiceMenor)+1) {
                     art = listaArticulos.get(opcion);
+                    if (!art.isDisponible()) {
+                    	System.out.println("El articulo no se puede dar de baja por un prestamo activo, si se desea dar de baja contacto con el administrador");
+                    	break;
+                    }
                     sc.nextLine();
                     boolean respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Está seguro que desea eliminar el " + tipoArticulo.getSimpleName().toLowerCase() + " " + art.getNombre() + "?");
                     if (respuestaBool) {

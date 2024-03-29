@@ -31,7 +31,7 @@ public class Administrador extends Usuario {
 		int i = 0, respuesta = 0;
 		while (i < listaUsuarios.size() && !encontrado) {
 			Usuario usu = listaUsuarios.get(i);
-			//Utilizo !(usu instanceof Administrador) para separar los usaurios de los administradores ya que todos son usuarios.
+			//Utilizo !(usu instanceof Administrador) para separar los usaurios de los administradores ya que todos son usuarios pero no todos son admnistradores.
 //			Busco USUARIOS
 			if (!(usu instanceof Administrador)) {
 				if (usu.getNombreUsuario().equals(nombreUsuario)) {
@@ -41,9 +41,11 @@ public class Administrador extends Usuario {
 						return usu;
 					} else {
 						System.out.println("Contraseña incorrecta");
+						respuesta  = -2;
 					}
 				} 
 //			Busco ADMINISTRADORES
+				
 			} else if(usu instanceof Administrador ) {
 				if (usu.getNombreUsuario().equals(nombreUsuario)) {
 					encontrado = true;
@@ -60,7 +62,8 @@ public class Administrador extends Usuario {
 			}
 			i++;
 		}
-		if (respuesta == -3) {
+		
+		if (!encontrado) {
 			System.out.println("Usuario no encontrado");
 		}
 		return null;
@@ -118,12 +121,10 @@ public class Administrador extends Usuario {
 	}
 	
 
-	
-	
 	protected static void bajaUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios) {
 		String dni;
 		System.out.print("Introduce el DNI del usuario que desea eliminar: ");
-		dni = sc.nextLine();
+		dni = sc.next();
 		int i = 0;
 		boolean encontrado = false, respuestaBool = false;
 		while (i < listaUsuarios.size() && !encontrado) {
@@ -132,6 +133,7 @@ public class Administrador extends Usuario {
 				if (usu.getDni().equals(dni)) {
 					respuestaBool = main.obtenerRespuestaSiNo(sc,
 							"¿Seguro que dese eliminar a " + usu.getNombreCompleto() + "?");
+					sc.nextLine();
 					encontrado = true;
 					if (respuestaBool) {
 						listaUsuarios.remove(i);
@@ -141,12 +143,11 @@ public class Administrador extends Usuario {
 				}
 
 			}
-			sc.nextLine();
 			i++;
 		} 
-		
 		if (!encontrado) {
 			System.out.println("Usaurio no encontrado");
+		    sc.nextLine(); 
 		}
 	}
 	

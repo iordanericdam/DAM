@@ -73,7 +73,10 @@ public class Usuario {
 		do {
 			String passUsaurio = sc.next();
 			passCorrecta = main.comprobarString(passUsaurio, 8);
-			usu.setPass(passUsaurio);
+			if (passCorrecta) {
+				usu.setPass(passUsaurio);
+				usu.primerLogin = false;
+			}
 		} while (!passCorrecta);
 
 	}
@@ -100,10 +103,6 @@ public class Usuario {
 		return encontrado;
 
 	}
-
-
-
-
 
 	protected static boolean validarDNI(String dni) {
 		if (dni == null || dni.length() != 9) {
