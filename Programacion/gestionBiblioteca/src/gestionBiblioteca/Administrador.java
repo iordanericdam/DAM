@@ -28,7 +28,7 @@ public class Administrador extends Usuario {
 	protected static Usuario comprobarCredenciales(ArrayList<Usuario> listaUsuarios, Scanner sc,
 			String nombreUsuario, String pass) {
 		boolean encontrado = false;
-		int i = 0, respuesta = 0;
+		int i = 0;
 		while (i < listaUsuarios.size() && !encontrado) {
 			Usuario usu = listaUsuarios.get(i);
 			//Utilizo !(usu instanceof Administrador) para separar los usaurios de los administradores ya que todos son usuarios pero no todos son admnistradores.
@@ -41,7 +41,6 @@ public class Administrador extends Usuario {
 						return usu;
 					} else {
 						System.out.println("Contraseña incorrecta");
-						respuesta  = -2;
 					}
 				} 
 //			Busco ADMINISTRADORES
@@ -55,9 +54,7 @@ public class Administrador extends Usuario {
 					} else {
 						System.out.println("Contraseña incorrecta!!");
 					}
-				} else {
-					respuesta = -3;
-				}
+				} 
 				
 			}
 			i++;

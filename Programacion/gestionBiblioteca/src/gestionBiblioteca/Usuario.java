@@ -101,7 +101,6 @@ public class Usuario {
 			i++;
 		}
 		return encontrado;
-
 	}
 
 	protected static boolean validarDNI(String dni) {

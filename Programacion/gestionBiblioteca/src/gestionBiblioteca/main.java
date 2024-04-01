@@ -35,7 +35,7 @@ public class main {
 //		Creacion de usuarios de administrador
 		Administrador admin1 = new Administrador("admin", "admin", "46660198Y", "Admin");
 		listaUsuarios.add((Administrador) admin1);
-		Administrador admin2 = new Administrador("edurne", "edurne", "50322180C", "Edurne");
+		Administrador admin2 = new Administrador("admineric", "eric", "50322180C", "Eric");
 		listaUsuarios.add((Administrador) admin2);
 
 		Usuario usuario1 = new Usuario("eric", "eric", "80560285W", "Eric Iordan", false);

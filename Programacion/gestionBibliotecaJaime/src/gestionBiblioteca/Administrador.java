@@ -57,7 +57,6 @@ public class Administrador extends Usuario {
 	}
 
 	protected void añadirArticulo(ArrayList<Articulo> articulos, Scanner sc) {
-
 		String titulo, estado, autor, editorial, isbn, genero, opcionArticulo;
 		int año, numRevista;
 		boolean salir = false;
@@ -65,9 +64,7 @@ public class Administrador extends Usuario {
 		System.out.println("Qué desea añadir (Libro/Pelicula/Revista): ");
 		opcionArticulo = sc.next().toLowerCase();
 		switch (opcionArticulo) {
-
 		case "libro":
-
 			System.out.println("Título: ");
 			titulo = sc.next();
 			System.out.println("Estado: ");
@@ -81,11 +78,9 @@ public class Administrador extends Usuario {
 
 			Libro libro = new Libro(titulo, estado, autor, editorial, isbn);
 			articulos.add(libro);
-
 			break;
 
 		case "pelicula":
-
 			System.out.println("Título: ");
 			titulo = sc.next();
 			System.out.println("Estado: ");
@@ -97,11 +92,9 @@ public class Administrador extends Usuario {
 
 			Pelicula pelicula = new Pelicula(titulo, estado, genero, año);
 			articulos.add(pelicula);
-
 			break;
 
 		case "revista":
-
 			System.out.println("Título: ");
 			titulo = sc.next();
 			System.out.println("Estado: ");
@@ -113,8 +106,8 @@ public class Administrador extends Usuario {
 
 			Revista revista = new Revista(titulo, estado, genero, numRevista);
 			articulos.add(revista);
-
 			break;
+			
 		default:
 			System.out.println("Error, inténtelo de nuevo, por favor.");
 			break;
@@ -127,7 +120,6 @@ public class Administrador extends Usuario {
 		for (Usuario usuario : usuarios) {
 			if (usuario instanceof Cliente) {
 				System.out.println(usuario.toString());
-
 			}
 		}
 
@@ -136,7 +128,6 @@ public class Administrador extends Usuario {
 		for (Usuario usuario : usuarios) {
 			Cliente usuarioElegido = (Cliente) usuario;
 			if (usuarioElegido.getIdCliente().equals(idCliente)) {
-
 				usuarioElegido.setPenalizado(true);
 				this.infraccionesGeneradas++;
 				System.out.println("Cliente con id: " + idCliente + " ha sido penalizado.");
