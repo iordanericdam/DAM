@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Habitacion {
 	
 	int precioNoche;
+	static final int PRECIOMINIMONOCHE = 50;
 	String categoria, nombreHabitacion;
 	ArrayList<LocalDate> fechaReservada;
 	
@@ -16,9 +17,58 @@ public class Habitacion {
 		this.fechaReservada = fechaReservada;
 	}
 	
-    public void agregarFechaReservada(LocalDate fecha) {
-        fechaReservada.add(fecha);
-    }
+	public Habitacion(int precioNoche, int categoria, String nombreHabitacion) {
+		this.precioNoche = precioNoche;
+		this.categoria = asignarCategoria(categoria);
+		this.nombreHabitacion = nombreHabitacion;
+	}
+	
+    public String getNombreHabitacion() {
+		return nombreHabitacion;
+	}
+    
+	public int getPrecioNoche() {
+		return precioNoche;
+	}
+
+	public void setPrecioNoche(int precioNoche) {
+		this.precioNoche = precioNoche;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(int categoria) {
+		this.categoria = asignarCategoria(categoria);
+	}
+
+	public ArrayList<LocalDate> getFechaReservada() {
+		return fechaReservada;
+	}
+
+	public void setFechaReservada(ArrayList<LocalDate> fechaReservada) {
+		this.fechaReservada = fechaReservada;
+	}
+
+	public static int getPreciominimonoche() {
+		return PRECIOMINIMONOCHE;
+	}
+
+	public void setNombreHabitacion(String nombreHabitacion) {
+		this.nombreHabitacion = nombreHabitacion;
+	}
+	
+	protected boolean estaReservada(LocalDate fecha) {
+	        if (fechaReservada != null) {
+	            return fechaReservada.contains(fecha);
+	        } else {
+	            return false; 
+	        }
+	    }
+    
+
+
     
     private String asignarCategoria(int categoria) {
     	if (categoria != 4) {
@@ -37,31 +87,14 @@ public class Habitacion {
     	
     }
     
-    protected static void altaHabitacion(Scanner sc, ArrayList<Habitacion> listaHabitaciones){
-    	int precioNoche;
-    	int categoria;
-		String nombreHabitacion;
-    	
-    	do {
-    		System.out.print("Introduce el nombre de la habitacion: ");
-    		nombreHabitacion = sc.nextLine();
-    	} while (controlDatos.comprobarString(nombreHabitacion, 3));
-    	do {
-    		categoria = Menus.seleccionarCategoria(sc);
-    	} while (categoria != 1 && categoria != 2 && categoria != 3 && categoria != 4);
-    	if (categoria !=4) {
-    		do {
-    			System.out.print("");
-    			
-    		} while (true);
-    	}
-    }
+
     
     @Override
     public String toString() {
+        String fechaReservadaString = fechaReservada != null ? fechaReservada.toString() : "Todavía no hay reservas";
         return String.format(
-                "Nombre habitacion: %d%n" + "Precio por noche: %d%n" + "Categoría: %s%n"+ "Fechas reservadas: %s%n",
-                nombreHabitacion, precioNoche, categoria, fechaReservada.toString());
+                "Nombre habitacion: %s%n" + "Precio por noche: %d%n" + "Categoría: %s%n"+ "Fechas reservadas: %s%n",
+                nombreHabitacion, precioNoche, categoria, fechaReservadaString);
     }
 	
 

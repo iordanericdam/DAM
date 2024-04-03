@@ -56,7 +56,7 @@ public class controlDatos {
                email.indexOf('@') > 0 && email.indexOf('@') < email.length() - 1;
     }
 	
-	protected static boolean validarDNI(String dni) {
+	protected static  boolean validarDNI(String dni) {
 		if (dni == null || dni.length() != 9) {
 			return false;
 		}
@@ -170,11 +170,11 @@ public class controlDatos {
 		return dni;
 	}
 	
-	protected static LocalDate pedirFecha(Scanner sc) {
+	protected static LocalDate pedirFecha(Scanner sc, String pregunta) {
 		String fechaNacimientoS;
 		sc.nextLine();
 		do {
-			System.out.print("Por favor, introduce tu fecha de nacimiento (en formato DD/MM/AAAA): ");
+			System.out.print(pregunta);
 			fechaNacimientoS = sc.nextLine();
 		} while (!controlDatos.validarFormatoFecha(fechaNacimientoS));
 		
@@ -205,6 +205,17 @@ public class controlDatos {
 		} while (!controlDatos.validarEmail(email));
 		return email;
 	}
+	
+	protected static int pedirOpcion(Scanner sc, String pregunta) {
+		String opcionS;
+		int opcion;
+		System.out.print(pregunta);
+		opcionS = sc.next();
+		opcion = controlDatos.comprobarSiNumero(opcionS);
+		return opcion;
+	}
+	
+	
 	
 	private static boolean comprobarNombreUsuario(String nombreUsuario, ArrayList<Usuario> listaUsuarios) {
 		boolean encontrado = false;
@@ -243,5 +254,60 @@ public class controlDatos {
             return false;
         }
     }
+    
+//    Habitacion
+    
+    protected static String pedirNombreHabitacion(Scanner sc) {
+
+		String nombreHabitacion;
+
+		do {
+			sc.nextLine();
+			System.out.print("Introduce el nombre de la habitacion: ");
+			nombreHabitacion = sc.nextLine().toLowerCase();
+		} while (!controlDatos.comprobarString(nombreHabitacion, 3));
+		
+		return nombreHabitacion;
+	}
+	
+	protected static int pedirCategoria(Scanner sc) {
+		int categoria;
+		do {
+			categoria = Menus.seleccionarCategoria(sc);
+		} while (categoria != 1 && categoria != 2 && categoria != 3 && categoria != 4);
+		return categoria;
+	}
+	
+	protected static int pedirPrecioNoche(Scanner sc) {
+		String numeroS;
+		int numero;
+		do {
+			System.out.print("Introduce el precio por noche de la habitacion: ");
+			numeroS = sc.next();
+			numero = controlDatos.comprobarSiNumero(numeroS);
+			
+			if (numero < Habitacion.PRECIOMINIMONOCHE) {
+				System.out.println("El precio minimo por noche establecido es de "+ Habitacion.PRECIOMINIMONOCHE+"€" );
+			}
+		} while (numero < 50);
+		
+		return numero;
+		
+	}
+	
+	protected static int pedirNoches(Scanner sc) {
+		
+		String numeroS;
+		int numero;
+		do {
+			System.out.print("Introduce el numero de noches que desea reservar: ");
+			numeroS = sc.next();
+			numero = controlDatos.comprobarSiNumero(numeroS);
+		} while (numero < 0);
+		
+		return numero;
+		
+	}
+
 
 }

@@ -9,6 +9,8 @@ public class main {
 		int opcion;
 
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		ArrayList<Habitacion> listaHabitaciones = new ArrayList<Habitacion>();
+		ArrayList<Reserva> listaReservas = new ArrayList<Reserva>();
 		Scanner sc = new Scanner(System.in);
 		
 //		Creacion de usuarios de administrador
@@ -25,32 +27,31 @@ public class main {
 				"juan");
 		listaUsuarios.add(usu2);
 		
+		ArrayList<LocalDate> fechasReserva = new ArrayList<>();
+        fechasReserva.add(LocalDate.of(2024, 4, 10)); // Ejemplo de fecha reservada
+        fechasReserva.add(LocalDate.of(2024, 4, 15)); // Ejemplo de fecha reservada
+
+        Reserva r1 = new Reserva("España", "85058845S", fechasReserva);
+        listaReservas.add(r1);
+        
+        Habitacion hab1 = new Habitacion(90, 2, "españa", null);
+        listaHabitaciones.add(hab1);
+		
 		do {
-			Usuario usu = Usuario.comprobarCredenciales(listaUsuarios, sc);
+			Usuario usu = gestionUsuarios.comprobarCredenciales(listaUsuarios, sc);
 			if (usu  instanceof Cliente) {
-				do {
-					opcion = Menus.mostrarMenuUsuario(sc);
-					switch (opcion) {
-					case 1:
-						break;
-					case 2:
-						break;
-					case 3:
-						break;
-					case 4:
-						System.out.println("Saliendo...");
-						break;	
-					}
-				} while (opcion != 4);
+				
+				gestionReserva.gestionHabitaciones(sc, listaReservas, listaHabitaciones, usu);
 
 			} else if (usu instanceof Administrador) {
 				do {
 					opcion = Menus.mostrarMenuAdmin(sc);
 					switch (opcion) {
 					case 1:
-						Administrador.gestionUsuarios(sc, listaUsuarios);
+						gestionUsuarios.gestionUsuarios(sc, listaUsuarios);
 						break;
 					case 2:
+						gestionHabitaciones.gestionHabitaciones(sc, listaHabitaciones);
 						break;
 					case 3:
 						break;
@@ -58,11 +59,12 @@ public class main {
 						System.out.println("Saliendo...");
 						break;
 					case 6:
-						Usuario.consultarUsuarios(listaUsuarios, Cliente.class);
+						System.out.println();
+						gestionHabitaciones.mostrarHabitaciones(listaHabitaciones);
 						break;
-					case 7:
-						Usuario.consultarUsuarios(listaUsuarios, Administrador.class);
-						break;	
+//					case 7:
+//						Usuario.consultarUsuarios(listaUsuarios, Administrador.class);
+//						break;	
 					default:
 						System.out.println("Opcion no valida");
 						break;
@@ -73,5 +75,7 @@ public class main {
 		} while (true);
 
 	}
+	
+    
 
 }

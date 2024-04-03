@@ -12,7 +12,7 @@ public abstract class Menus {
 		System.out.println("║ 4. Cerrar sesion.                      ║");
 		System.out.println("╚════════════════════════════════════════╝");
 		
-		return pedirOpcion(sc, "Eligue una opcion: ");
+		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
 	}
 	
 	protected static int mostrarMenuAdmin(Scanner sc) {
@@ -25,7 +25,7 @@ public abstract class Menus {
 		System.out.println("║ 4. Cerrar sesion.                      ║");
 		System.out.println("╚════════════════════════════════════════╝");
 		
-		return pedirOpcion(sc, "Eligue una opcion: ");
+		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
 	}
 	
 	protected static int mostrarMenuGestionUsuarios(Scanner sc) {
@@ -37,7 +37,7 @@ public abstract class Menus {
 		System.out.println("║ 3. Salir.                                ║");
 		System.out.println("╚══════════════════════════════════════════╝");
 		
-		return pedirOpcion(sc, "Eligue una opcion: ");
+		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
 	}
 	
 	protected static int mostrarMenuGestionClientes(Scanner sc) {
@@ -50,8 +50,9 @@ public abstract class Menus {
 		System.out.println("║ 4. Salir.                              ║");
 		System.out.println("╚════════════════════════════════════════╝");
 		
-		return pedirOpcion(sc, "Eligue una opcion: ");
+		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
 	}
+	
 	
 	protected static int seleccionarCategoria(Scanner sc) {
 		System.out.println("╔════════════════════════════════════════╗");
@@ -63,7 +64,7 @@ public abstract class Menus {
 		System.out.println("║ 4. Salir.                              ║");
 		System.out.println("╚════════════════════════════════════════╝");
 		
-		return pedirOpcion(sc, "Eligue una opcion: ");
+		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
 	}
 	
 	protected static int mostrarMenuGestionHabitaciones(Scanner sc) {
@@ -76,7 +77,7 @@ public abstract class Menus {
 		System.out.println("║ 4. Salir.                              ║");
 		System.out.println("╚════════════════════════════════════════╝");
 		
-		return pedirOpcion(sc, "Eligue una opcion: ");
+		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
 	}
 	
 	protected static int mostrarMenuModificarUsuario(Scanner sc) {
@@ -91,7 +92,19 @@ public abstract class Menus {
 		System.out.println("║ 6. Salir.                              ║"); 
 		System.out.println("╚════════════════════════════════════════╝");
 		
-		return pedirOpcion(sc, "Introduce la opcion que desea modificar: ");
+		return controlDatos.pedirOpcion(sc, "Introduce la opcion que desea modificar: ");
+	}
+	
+	protected static int mostrarMenuModificarHabitacion(Scanner sc) {
+		System.out.println("╔════════════════════════════════════════╗");
+		System.out.println("║                Modificar               ║");
+		System.out.println("╠════════════════════════════════════════╣");
+		System.out.println("║ 1. Cambiar categoria.                  ║");
+		System.out.println("║ 2. Cambiar precio por noche.           ║");
+		System.out.println("║ 3. Salir.                              ║"); 
+		System.out.println("╚════════════════════════════════════════╝");
+		
+		return controlDatos.pedirOpcion(sc, "Introduce la opcion que desea modificar: ");
 	}
 	
 	protected static int mostrarMenuGestionAdministradores(Scanner sc) {
@@ -104,7 +117,7 @@ public abstract class Menus {
 		System.out.println("║ 4. Salir.                              ║");
 		System.out.println("╚════════════════════════════════════════╝");
 		
-		return pedirOpcion(sc, "Eligue una opcion: ");
+		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
 	}
 	
 	protected static int mostrarMenuGestionHabitacion(Scanner sc) {
@@ -117,16 +130,9 @@ public abstract class Menus {
 		System.out.println("║ 4. Salir.                              ║");
 		System.out.println("╚════════════════════════════════════════╝");
 		
-		return pedirOpcion(sc, "Eligue una opcion: ");
+		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
 	}
 	
-	private static int pedirOpcion(Scanner sc, String pregunta) {
-		String opcionS;
-		int opcion;
-		System.out.print(pregunta);
-		opcionS = sc.next();
-		opcion = controlDatos.comprobarSiNumero(opcionS);
-		return opcion;
-	}
+
 
 }
