@@ -72,7 +72,7 @@ public class Usuario {
 		System.out.println("Para continuar primero debes cambiar la contraseña (debe tener minimo 8 caracteres): ");
 		do {
 			String passUsaurio = sc.next();
-			passCorrecta = main.comprobarString(passUsaurio, 8);
+			passCorrecta = controlDatos.comprobarString(passUsaurio, 8);
 			if (passCorrecta) {
 				usu.setPass(passUsaurio);
 				usu.primerLogin = false;
@@ -103,72 +103,7 @@ public class Usuario {
 		return encontrado;
 	}
 
-	protected static boolean validarDNI(String dni) {
-		if (dni == null || dni.length() != 9) {
-			return false;
-		}
-
-		for (int i = 0; i < 8; i++) {
-			if (!Character.isDigit(dni.charAt(i))) {
-				return false;
-			}
-		}
-
-		char letra = Character.toUpperCase(dni.charAt(8));
-		if (!Character.isLetter(letra)) {
-			return false;
-		}
-
-		int numDNI;
-		try {
-			numDNI = Integer.parseInt(dni.substring(0, 8));
-		} catch (NumberFormatException e) {
-			return false;
-		}
-
-		char letraCalculada = calcularLetra(numDNI);
-
-		if (letra != letraCalculada) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private static char calcularLetra(int numero) {
-		String letrasNIE = "TRWAGMYFPDXBNJZSQVHLCKE";
-		int indiceLetra = numero % 23;
-		return letrasNIE.charAt(indiceLetra);
-
-	}
-
-	protected static boolean validarNIE(String nie) {
-		char primeraLetra = nie.charAt(0);
-		if (primeraLetra == 'X') {
-			nie = "0" + nie.substring(1);
-		} else if (primeraLetra == 'Y') {
-			nie = "1" + nie.substring(1);
-		} else if (primeraLetra == 'Z') {
-			nie = "2" + nie.substring(1);
-		} else {
-			return false;
-		}
-
-		if (nie.length() != 9 || !nie.substring(1).matches("\\d{7}[A-Z]")) {
-			return false;
-		}
-
-		String digitos = nie.substring(0, 8);
-		int numNIE = Integer.parseInt(digitos);
-		char letraCalculada = calcularLetra(numNIE);
-		char letraControl = nie.charAt(8);
-
-		if (letraControl != letraCalculada) {
-			return false;
-		}
-
-		return true;
-	}
+	
 
 	protected static boolean comprobarUsaurio(String dni, ArrayList<Usuario> listaEmpleados) {
 		boolean existe = false;

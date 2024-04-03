@@ -58,11 +58,11 @@ public class Prestamo {
 				System.out.print("Introduce el numero del/de la " + tipoArticulo.getSimpleName().toLowerCase()
 						+ " que desea llevarse prestado: ");
 				String opcionS = sc.next();
-				int opcion = main.comprobarSiNumero(opcionS);
+				int opcion = controlDatos.comprobarSiNumero(opcionS);
 				if (opcion != -1 && opcion <= indiceMayor && opcion >= (indiceMayor - indiceMenor) + 1) {
 					art = listaArticulos.get(opcion);
 					
-					boolean respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Está seguro que desea llevarse el "
+					boolean respuestaBool = controlDatos.obtenerRespuestaSiNo(sc, "¿Está seguro que desea llevarse el "
 							+ tipoArticulo.getSimpleName().toLowerCase() + " " + art.getNombre() + "?");
 					if (respuestaBool) {
 
@@ -74,7 +74,7 @@ public class Prestamo {
 						do {
 							System.out.println("Introduce el dia actual: ");
 							String diaActualS = sc.next();
-							diaActual = main.comprobarSiNumero(diaActualS);
+							diaActual = controlDatos.comprobarSiNumero(diaActualS);
 							sc.nextLine();
 						} while (diaActual == -1);
 
@@ -115,9 +115,9 @@ public class Prestamo {
 					System.out.print("Introduce el numero del prestamo que desea devolver: ");
 					String opcionS = sc.next();
 					sc.nextLine();
-					int opcion = main.comprobarSiNumero(opcionS);
+					int opcion = controlDatos.comprobarSiNumero(opcionS);
 					if (opcion != -1 && opcion <= indiceMayor && opcion >= (indiceMayor - indiceMenor) + 1) {
-						boolean respuestaBool = main.obtenerRespuestaSiNo(sc,
+						boolean respuestaBool = controlDatos.obtenerRespuestaSiNo(sc,
 								"¿Está seguro que desea devolver " + pres.getPKarticulo() + "?");
 						if (respuestaBool) {
 							sc.nextLine();
@@ -181,24 +181,13 @@ public class Prestamo {
 		}
 	}
 	
-	protected static void mostrarPrestamosMenu() {
-	    System.out.println("╔═══════════════════════════╗");
-	    System.out.println("║           Prestamos       ║");
-	    System.out.println("╠═══════════════════════════╣");
-	    System.out.println("║ 1. Activos                ║");
-	    System.out.println("║ 2. Todos                  ║");
-	    System.out.println("║ 3. Salir                  ║");
-	    System.out.println("╚═══════════════════════════╝");
-	}
 	
 	protected static void consultarPrestamosUsuario(Scanner sc, ArrayList<Prestamo> listaPrestamos, Usuario usu) {
-		String opcionS;
 		int opcion;
 		do {
 			System.out.println("¿Que prestamo desea visualizar?");
-			Prestamo.mostrarPrestamosMenu();
-			opcionS = sc.next();
-			opcion = main.comprobarSiNumero(opcionS);
+			
+			opcion = Menus.mostrarMenuArticulos(sc);
 			switch (opcion) {
 			case 1:
 				System.out.println("Prestamos ACTIVOS");
@@ -218,13 +207,10 @@ public class Prestamo {
 	}
 	
 	protected static void consultarPrestamosAdministrador(Scanner sc, ArrayList<Prestamo> listaPrestamos) {
-		String opcionS;
 		int opcion;
 		do {
 			System.out.println("¿Que prestamo desea visualizar?");
-			Prestamo.mostrarPrestamosMenu();
-			opcionS = sc.next();
-			opcion = main.comprobarSiNumero(opcionS);
+			opcion = Menus.mostrarPrestamosMenu(sc);
 			switch (opcion) {
 			case 1:
 				System.out.println("Prestamos ACTIVOS");

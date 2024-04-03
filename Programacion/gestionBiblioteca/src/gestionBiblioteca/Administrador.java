@@ -10,20 +10,6 @@ public class Administrador extends Usuario {
 	}
 	
 	
-	protected static void mostrarMenuAdmin() {
-		System.out.println("╔════════════════════════════════════════╗");
-		System.out.println("║           Menu de Administrador        ║");
-		System.out.println("╠════════════════════════════════════════╣");
-		System.out.println("║ 1. Dar de alta un usuario.             ║");
-		System.out.println("║ 2. Dar de baja un usuario.             ║");
-		System.out.println("║ 3. Penalizar usuarios.                 ║");
-		System.out.println("║ 4. Dar de alta un articulo.            ║");
-		System.out.println("║ 5. Dar de baja un articulo.            ║");
-		System.out.println("║ 6. Consultar prestamos.                ║");
-		System.out.println("║ 7. Cerrar sesion.                      ║");
-		System.out.println("╚════════════════════════════════════════╝");
-	}
-	
 	
 	protected static Usuario comprobarCredenciales(ArrayList<Usuario> listaUsuarios, Scanner sc,
 			String nombreUsuario, String pass) {
@@ -71,23 +57,24 @@ public class Administrador extends Usuario {
 		boolean entradaCorrecta = false, respuestaBool = false;
 
 		do {
+			sc.nextLine();
 			System.out.print("Introduce el nombre completo: ");
 			nombreCompleto = sc.nextLine();
-		} while (!main.comprobarString(nombreCompleto, 5));
+		} while (!controlDatos.comprobarString(nombreCompleto, 5));
 		do {
 			System.out.print("Introduce el DNI o NIE: ");
 			dni = sc.next().toUpperCase();
 
-			if (!validarDNI(dni) && !validarNIE(dni)) {
+			if (!controlDatos.validarDNI(dni) && !controlDatos.validarNIE(dni)) {
 				System.out.println("El DNI o NIE introducidos son incorrectos.");
-				respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Deseas volver a escribirlo?");
+				respuestaBool = controlDatos.obtenerRespuestaSiNo(sc, "¿Deseas volver a escribirlo?");
 			} else {
 				respuestaBool = false;
 				entradaCorrecta = true;
 			}
 
 			if (comprobarUsaurio(dni, listaUsuarios)) {
-				respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Deseas escribir otro DNI?");
+				respuestaBool = controlDatos.obtenerRespuestaSiNo(sc, "¿Deseas escribir otro DNI?");
 				entradaCorrecta = false;
 			}
 
@@ -128,7 +115,7 @@ public class Administrador extends Usuario {
 			Usuario usu = listaUsuarios.get(i);
 			if (!(usu instanceof Administrador)) {
 				if (usu.getDni().equals(dni)) {
-					respuestaBool = main.obtenerRespuestaSiNo(sc,
+					respuestaBool = controlDatos.obtenerRespuestaSiNo(sc,
 							"¿Seguro que dese eliminar a " + usu.getNombreCompleto() + "?");
 					sc.nextLine();
 					encontrado = true;
@@ -153,7 +140,7 @@ public class Administrador extends Usuario {
 		String diaActualS;
 		System.out.print("Introduce el dia actual: ");
 		diaActualS = sc.next();
-		diaActual = main.comprobarSiNumero(diaActualS);
+		diaActual = controlDatos.comprobarSiNumero(diaActualS);
 		
 		for (Prestamo pres : listaPrestamos) {
 			if (diaActual > pres.diaPrestamo + pres.diasParDevolver) {

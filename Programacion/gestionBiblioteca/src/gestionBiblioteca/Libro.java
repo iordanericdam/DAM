@@ -44,20 +44,6 @@ public class Libro extends Articulo {
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}
-
-	protected static void mostrarMenuGeneros() {
-	    System.out.println("╔════════════════════════════════════════════╗");
-	    System.out.println("║             Menú de Géneros de Libros      ║");
-	    System.out.println("╠════════════════════════════════════════════╣");
-	    System.out.println("║ 1. Acción                                  ║");
-	    System.out.println("║ 2. Misterio                                ║");
-	    System.out.println("║ 3. Ciencia Ficción                         ║");
-	    System.out.println("║ 4. Fantasía                                ║");
-	    System.out.println("║ 5. Romance                                 ║");
-	    System.out.println("║ 6. Terror                                  ║");
-	    System.out.println("║ 7. Otro                                    ║");
-	    System.out.println("╚════════════════════════════════════════════╝");
-	}
 	
 	private String obtenerNombreGenero(int genero) {
 		switch (genero) {

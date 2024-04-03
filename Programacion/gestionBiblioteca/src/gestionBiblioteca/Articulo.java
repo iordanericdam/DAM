@@ -54,19 +54,20 @@ public class Articulo {
 
 	protected static void altaArticulo(int tipo, ArrayList<Articulo> listaArticulos, Articulo art, Scanner sc) {
 
-		String nombre = null, idioma = null, diasParaDevolucionS, ISBNs, autor, eleccionGeneroS, editor, ISSNs,
-				eleccionTematicaS, director, clasificacionEdadS;
+		String nombre = null, idioma = null, diasParaDevolucionS, ISBNs, autor, editor, ISSNs,
+				 director;
 		boolean disponible = false;
 		int diasParaDevolucion = 0, ISBN = 0, genero = 0, ISSN = 0, tematica = 0, clasificacionEdad;
 
 		if (tipo != 4) {
+			sc.nextLine();
 			System.out.print("Introduce el nombre: ");
 			nombre = sc.nextLine();
-			disponible = main.obtenerRespuestaSiNo(sc, "¿El articulo esta disponible?");
+			disponible = controlDatos.obtenerRespuestaSiNo(sc, "¿El articulo esta disponible?");
 			do {
 				System.out.print("¿En cuantos dias se debe devolver? ");
 				diasParaDevolucionS = sc.next();
-				diasParaDevolucion = main.comprobarSiNumero(diasParaDevolucionS);
+				diasParaDevolucion = controlDatos.comprobarSiNumero(diasParaDevolucionS);
 				sc.nextLine();
 			} while (diasParaDevolucion == 0);
 
@@ -81,15 +82,13 @@ public class Articulo {
 			do {
 				System.out.print("Introduce el ISBN del libro: ");
 				ISBNs = sc.next();
-				ISBN = main.comprobarSiNumero(ISBNs);
+				ISBN = controlDatos.comprobarSiNumero(ISBNs);
 				sc.nextLine();
 			} while (ISBN == 0);
 			System.out.print("Introduce el/los autor/es del libro: ");
 			autor = sc.nextLine();
 			do {
-				Libro.mostrarMenuGeneros();
-				eleccionGeneroS = sc.next();
-				genero = main.comprobarSiNumero(eleccionGeneroS);
+				genero = Menus.mostrarMenuGeneros(sc);
 				sc.nextLine();
 			} while (genero == 0);
 
@@ -100,16 +99,14 @@ public class Articulo {
 			do {
 				System.out.print("Introduce el ISSN de la revista: ");
 				ISSNs = sc.next();
-				ISSN = main.comprobarSiNumero(ISSNs);
+				ISSN = controlDatos.comprobarSiNumero(ISSNs);
 				sc.nextLine();
 			} while (ISSN == 0);
 
 			System.out.print("Introduce el/los editor/es de la revista: ");
 			editor = sc.nextLine();
 			do {
-				Libro.mostrarMenuGeneros();
-				eleccionTematicaS = sc.next();
-				tematica = main.comprobarSiNumero(eleccionTematicaS);
+				tematica = Menus.mostrarMenuGeneros(sc);
 				sc.nextLine();
 			} while (tematica == 0);
 
@@ -120,15 +117,11 @@ public class Articulo {
 			System.out.print("Introduce el nombre del Director/es: ");
 			director = sc.nextLine();
 			do {
-				Pelicula.mostrarMenuGenerosPelicula();
-				eleccionGeneroS = sc.next();
-				genero = main.comprobarSiNumero(eleccionGeneroS);
+				genero = Menus.mostrarMenuGenerosPelicula(sc);
 				sc.nextLine();
 			} while (genero == 0);
 			do {
-				Pelicula.mostrarMenuClasificacionEdadPelicula();
-				clasificacionEdadS = sc.next();
-				clasificacionEdad = main.comprobarSiNumero(clasificacionEdadS);
+				clasificacionEdad = Menus.mostrarMenuClasificacionEdadPelicula(sc);
 				sc.nextLine();
 			} while (clasificacionEdad == 0);
 
@@ -155,7 +148,7 @@ public class Articulo {
                 System.out.print("Introduce el nombre del " + tipoArticulo.getSimpleName().toLowerCase() + " que desea eliminar PERMANENTEMENTE: ");
                 String opcionS = sc.next();
                 sc.nextLine();
-                int opcion = main.comprobarSiNumero(opcionS);
+                int opcion = controlDatos.comprobarSiNumero(opcionS);
                 if (opcion != -1 && opcion <= indiceMayor && opcion >= (indiceMayor-indiceMenor)+1) {
                     art = listaArticulos.get(opcion);
                     if (!art.isDisponible()) {
@@ -163,7 +156,7 @@ public class Articulo {
                     	break;
                     }
                     sc.nextLine();
-                    boolean respuestaBool = main.obtenerRespuestaSiNo(sc, "¿Está seguro que desea eliminar el " + tipoArticulo.getSimpleName().toLowerCase() + " " + art.getNombre() + "?");
+                    boolean respuestaBool = controlDatos.obtenerRespuestaSiNo(sc, "¿Está seguro que desea eliminar el " + tipoArticulo.getSimpleName().toLowerCase() + " " + art.getNombre() + "?");
                     if (respuestaBool) {
                         listaArticulos.remove(opcion);
                         System.out.println("El " + tipoArticulo.getSimpleName().toLowerCase() + " ha sido eliminado correctamente.");
@@ -182,26 +175,13 @@ public class Articulo {
     }
 	
 
-	protected static void mostrarMenuArticulos() {
-		System.out.println("╔════════════════════════════════════════════╗");
-		System.out.println("║             Articulos                      ║");
-		System.out.println("╠════════════════════════════════════════════╣");
-		System.out.println("║ 1. Libro                                   ║");
-		System.out.println("║ 2. Revista                                 ║");
-		System.out.println("║ 3. Película                                ║");
-		System.out.println("║ 4. Salir                                   ║");
-		System.out.println("╚════════════════════════════════════════════╝");
-	}
+
 
 	protected static int obtenerTipoArtiuclo(Scanner sc) {
 		String opcionS;
 		int opcion;
 		do {
-
-			Articulo.mostrarMenuArticulos();
-			System.out.print("Eligue una opcion: ");
-			opcionS = sc.nextLine();
-			opcion = main.comprobarSiNumero(opcionS);
+			opcion = Menus.mostrarMenuArticulos(sc);
 			if (opcion != 0 && opcion != 1 && opcion != 2 && opcion != 3 && opcion != 4) {
 				System.out.println("Debes introducir un numero del 1 al 4");
 			}

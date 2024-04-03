@@ -12,42 +12,9 @@ public class Pelicula  extends Articulo{
 	}
 	
 	public Pelicula() {
-		
 	}
 	
-	protected static void mostrarMenuGenerosPelicula() {
-	    System.out.println("╔════════════════════════════════════════════╗");
-	    System.out.println("║           Menú de Géneros de Películas      ║");
-	    System.out.println("╠════════════════════════════════════════════╣");
-	    System.out.println("║ 1. Acción                                   ║");
-	    System.out.println("║ 2. Aventura                                 ║");
-	    System.out.println("║ 3. Comedia                                  ║");
-	    System.out.println("║ 4. Drama                                    ║");
-	    System.out.println("║ 5. Fantasía                                 ║");
-	    System.out.println("║ 6. Terror                                   ║");
-	    System.out.println("║ 7. Ciencia ficción                          ║");
-	    System.out.println("║ 8. Romance                                  ║");
-	    System.out.println("║ 9. Documental                               ║");
-	    System.out.println("║ 10. Animación                               ║");
-	    System.out.println("║ 11. Muscial                                 ║");
-	    System.out.println("║ 12. Misterio                                ║");
-	    System.out.println("║ 13. Suspense                                ║");
-	    System.out.println("║ 14. Crimen                                  ║");
-	    System.out.println("╚════════════════════════════════════════════╝");
-	}
-
 	
-	protected static void mostrarMenuClasificacionEdadPelicula() {
-	    System.out.println("╔════════════════════════════════════════════╗");
-	    System.out.println("║      Menú de Clasificaciones de Películas   ║");
-	    System.out.println("╠════════════════════════════════════════════╣");
-	    System.out.println("║ 1. G (Apta para todos los públicos)        ║");
-	    System.out.println("║ 2. PG (Sugiere la guía de los padres)      ║");
-	    System.out.println("║ 3. PG-13 (No recomendada para menores de 13 años) ║");
-	    System.out.println("║ 4. R (Restringida, menores de 17 años requieren acompañamiento de un adulto) ║");
-	    System.out.println("║ 5. NC-17 (Prohibida para menores de 17 años)║");
-	    System.out.println("╚════════════════════════════════════════════╝");
-	}
 	
 	
 	protected static String convertirNumeroAClasificacionEdad(int numClasificacion) {

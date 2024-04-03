@@ -16,23 +16,6 @@ public class Revista extends Articulo {
 		
 	}
 	
-	
-	protected static void mostrarMenuTematicasRevista() {
-	    System.out.println("╔════════════════════════════════════════════╗");
-	    System.out.println("║           Menú de Temáticas de Revista       ║");
-	    System.out.println("╠════════════════════════════════════════════╣");
-	    System.out.println("║ 1. Actualidad                               ║");
-	    System.out.println("║ 2. Ciencia                                  ║");
-	    System.out.println("║ 3. Tecnología                               ║");
-	    System.out.println("║ 4. Historia                                 ║");
-	    System.out.println("║ 5. Moda                                     ║");
-	    System.out.println("║ 6. Cultura                                  ║");
-	    System.out.println("║ 7. Otro                                    ║");
-	    System.out.println("╚════════════════════════════════════════════╝");
-	}
-
-	
-
     private String obtenerNombreTematica(int numTematica) {
         switch (numTematica) {
             case 1:

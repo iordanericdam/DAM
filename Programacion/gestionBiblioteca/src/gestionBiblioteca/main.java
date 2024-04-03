@@ -30,7 +30,6 @@ public class main {
 		ArrayList<Prestamo> listaPrestamos = new ArrayList<Prestamo>();
 		Articulo art = new Articulo();
 		Usuario usu = new Usuario();
-		Prestamo pres = new Prestamo();
 
 //		Creacion de usuarios de administrador
 		Administrador admin1 = new Administrador("admin", "admin", "46660198Y", "Admin");
@@ -74,7 +73,6 @@ public class main {
 		int opcion = 0;
 		System.out.println("Bienvenido/a a la bibloteca Todo Libros");
 		do {
-//			System.out.println("Recuerda que si es la primera vez que inicia sesion debe poner como contaseña el DNI/NIE en MAYUSCULAS");
 			System.out.print("Introduce tu nombre de usuario: ");
 			nombreUsuario = sc.nextLine().toLowerCase();
 			System.out.print("Introduce tu contrseña: ");
@@ -82,10 +80,7 @@ public class main {
 			usu = Administrador.comprobarCredenciales(listaUsuarios, sc, nombreUsuario, pass);
 			if (usu instanceof Administrador) {
 				do {
-					Administrador.mostrarMenuAdmin();
-					System.out.print("Opcion: ");
-					opcionS = sc.nextLine();
-					opcion = comprobarSiNumero(opcionS);
+					opcion = Menus.mostrarMenuAdmin(sc);
 					switch (opcion) {
 					case 1:
 						Administrador.altaUsuario(sc, listaUsuarios, usu);
@@ -99,6 +94,7 @@ public class main {
 					case 4:
 						do {
 							opcion = Articulo.obtenerTipoArtiuclo(sc);
+							System.out.println(opcion);
 							if (opcion != 4) {
 								Articulo.altaArticulo(opcion, listaArticulos, art, sc);
 							}
@@ -136,7 +132,6 @@ public class main {
 						break;
 					}
 				} while (opcion != 7);
-
 			} else if (!(usu instanceof Administrador)) {
 				try {
 					if (usu.isPrimerLogin()) {
@@ -147,7 +142,7 @@ public class main {
 						Usuario.mostrarMenuUsuario();
 						System.out.print("Opcion: ");
 						opcionS = sc.nextLine();
-						opcion = comprobarSiNumero(opcionS);
+						opcion = controlDatos.comprobarSiNumero(opcionS);
 						switch (opcion) {
 						case 1:
 							opcion = Articulo.obtenerTipoArtiuclo(sc);
@@ -184,51 +179,6 @@ public class main {
 			}
 		} while (true);
 	}
-
-	protected static int comprobarSiNumero(String numeroS) {
-		int opcion = -1;
-		try {
-			opcion = Integer.parseInt(numeroS);
-			if (opcion < 0) {
-				System.out.println("Debes introducir un número mayor o igual que 0.");
-				opcion = -1;
-			}
-		} catch (Exception e) {
-			System.out.println("Debes introducir un numero.");
-
-		}
-		return opcion;
-	}
-
-	protected static boolean comprobarString(String variableS, int caracteres) {
-		boolean correcto = false;
-		if (variableS.length() < caracteres) {
-			System.out.println("La longitud debe de ser minimo de " + caracteres + " caracteres");
-		} else {
-			correcto = true;
-		}
-		return correcto;
-
-	}
-
-	protected static boolean obtenerRespuestaSiNo(Scanner sc, String pregunta) {
-		boolean respuesta;
-		while (true) {
-			System.out.print(pregunta + " (responda con si o no): ");
-			char respuestaChar = sc.next().toLowerCase().charAt(0);
-			if (respuestaChar == 's') {
-				respuesta = true;
-				break;
-			} else if (respuestaChar == 'n') {
-				respuesta = false;
-				break;
-			} else {
-				System.out.println("Por favor, responda con si o no.");
-			}
-		}
-		return respuesta;
-	}
-
 
 
 }

@@ -308,6 +308,8 @@ public class controlDatos {
 		return numero;
 		
 	}
+	
+	
 
 
 }
