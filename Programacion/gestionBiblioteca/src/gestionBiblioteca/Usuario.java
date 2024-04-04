@@ -126,15 +126,5 @@ public class Usuario {
 
 	}
 
-	protected static void mostrarMenuUsuario() {
-		System.out.println("╔════════════════════════════════════════╗");
-		System.out.println("║           Menu de Usaurio              ║");
-		System.out.println("╠════════════════════════════════════════╣");
-		System.out.println("║ 1. Hacer prestamo/s.                   ║");
-		System.out.println("║ 2. Devolver libro/s.                   ║");
-		System.out.println("║ 3. Consultar prestamos.                ║");
-		System.out.println("║ 4. Cerrar sesion.                      ║");
-		System.out.println("╚════════════════════════════════════════╝");
-	}
 
 }

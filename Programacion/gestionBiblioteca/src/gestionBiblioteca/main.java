@@ -94,7 +94,6 @@ public class main {
 					case 4:
 						do {
 							opcion = Articulo.obtenerTipoArtiuclo(sc);
-							System.out.println(opcion);
 							if (opcion != 4) {
 								Articulo.altaArticulo(opcion, listaArticulos, art, sc);
 							}
@@ -123,6 +122,8 @@ public class main {
 						Prestamo.consultarPrestamosAdministrador(sc, listaPrestamos);
 						break;
 					case 7:
+						System.out.println("Adios :(");
+						sc.nextLine();
 						break;
 					case 8:
 						do {
@@ -139,27 +140,10 @@ public class main {
 						sc.nextLine();
 					}
 					do {
-						Usuario.mostrarMenuUsuario();
-						System.out.print("Opcion: ");
-						opcionS = sc.nextLine();
-						opcion = controlDatos.comprobarSiNumero(opcionS);
+						opcion = Menus.mostrarMenuUsuario(sc);
 						switch (opcion) {
 						case 1:
-							opcion = Articulo.obtenerTipoArtiuclo(sc);
-							switch (opcion) {
-							case 1:
-								Prestamo.realizarPrestamo(sc,usu, listaArticulos,  Libro.class, listaPrestamos);
-								break;
-							case 2:
-								Prestamo.realizarPrestamo(sc,usu, listaArticulos,  Revista.class, listaPrestamos);
-								break;
-							case 3:
-								Prestamo.realizarPrestamo(sc,usu, listaArticulos,  Pelicula.class, listaPrestamos);
-								break;	
-							case 4:
-								System.out.println("Saliendo...");
-								break;
-							}
+							altaPrestamoMain(sc, listaArticulos, listaPrestamos, usu);
 							break;
 						case 2:
 							Prestamo.devolverPrestamo(listaPrestamos, listaArticulos, usu, sc);
@@ -168,6 +152,8 @@ public class main {
 							Prestamo.consultarPrestamosUsuario(sc, listaPrestamos, usu);
 							break;
 						case 4:
+							sc.nextLine();
+							System.out.println("Adios :(");
 							break;
 
 						}
@@ -178,6 +164,27 @@ public class main {
 				}
 			}
 		} while (true);
+	}
+	
+	private static void altaPrestamoMain(Scanner sc, ArrayList<Articulo> listaArticulos, ArrayList<Prestamo>listaPrestamos, Usuario usu) {
+		int opcion;
+		
+		opcion = Articulo.obtenerTipoArtiuclo(sc);
+		switch (opcion) {
+		case 1:
+			Prestamo.realizarPrestamo(sc,usu, listaArticulos,  Libro.class, listaPrestamos);
+			break;
+		case 2:
+			Prestamo.realizarPrestamo(sc,usu, listaArticulos,  Revista.class, listaPrestamos);
+			break;
+		case 3:
+			Prestamo.realizarPrestamo(sc,usu, listaArticulos,  Pelicula.class, listaPrestamos);
+			break;	
+		case 4:
+			System.out.println("Saliendo...");
+			break;
+		}
+		
 	}
 
 

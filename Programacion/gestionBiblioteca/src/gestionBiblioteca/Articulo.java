@@ -58,6 +58,7 @@ public class Articulo {
 				 director;
 		boolean disponible = false;
 		int diasParaDevolucion = 0, ISBN = 0, genero = 0, ISSN = 0, tematica = 0, clasificacionEdad;
+		
 
 		if (tipo != 4) {
 			sc.nextLine();

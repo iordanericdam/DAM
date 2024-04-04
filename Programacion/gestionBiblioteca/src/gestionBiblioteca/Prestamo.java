@@ -72,7 +72,8 @@ public class Prestamo {
 						diasParDevolver = art.getDiasParaDevolver();
 						sc.nextLine();
 						do {
-							System.out.println("Introduce el dia actual: ");
+							// Trato el diActual como numero y no como fehca porque no hemos visto las fechas.
+							System.out.println("Introduce el dia actual (debes introducir SOLO un numero del 1 al 30): ");
 							String diaActualS = sc.next();
 							diaActual = controlDatos.comprobarSiNumero(diaActualS);
 							sc.nextLine();
