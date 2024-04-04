@@ -22,6 +22,15 @@ public abstract class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	public Usuario(String dni, String nombreCompleto, String email, String nombreUsuario, String contraseña, boolean primerLogin) {
+		this.dni = dni;
+		this.nombreCompleto = nombreCompleto;
+		this.email = email;
+		this.nombreUsuario = nombreUsuario;
+		this.contraseña = contraseña;
+		this.primerLogin = primerLogin;
+	}
+	
 	public Usuario(String dni, String nombreCompleto, String email, String nombreUsuario, String contraseña) {
 		this.dni = dni;
 		this.nombreCompleto = nombreCompleto;

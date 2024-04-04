@@ -134,9 +134,9 @@ public class controlDatos {
 	protected static String pedirNombreCompleto(Scanner sc, Class<? extends Usuario> tipoUsuario ) {
 		String nombreCompleto;
 		do {
-			sc.nextLine().toUpperCase();
+			sc.nextLine();
 			System.out.print("Introduce el nombre completo del " + tipoUsuario.getSimpleName() + ": ");
-			nombreCompleto = sc.nextLine();
+			nombreCompleto = sc.nextLine().toLowerCase();
 		} while (!controlDatos.comprobarString(nombreCompleto, 5));
 		return nombreCompleto;
 
@@ -162,23 +162,20 @@ public class controlDatos {
 				respuestaBool = obtenerRespuestaSiNo(sc, "¿Deseas escribir otro DNI?");
 				dni = null;
 			}
-			
-			
-			sc.nextLine();
 		} while (respuestaBool);
 		
 		return dni;
 	}
 	
 	protected static LocalDate pedirFecha(Scanner sc, String pregunta) {
-		String fechaNacimientoS;
-		sc.nextLine();
+		String fechaS;
 		do {
+			sc.nextLine();
 			System.out.print(pregunta);
-			fechaNacimientoS = sc.nextLine();
-		} while (!controlDatos.validarFormatoFecha(fechaNacimientoS));
+			fechaS = sc.nextLine();
+		} while (!controlDatos.validarFormatoFecha(fechaS));
 		
-		return LocalDate.parse(fechaNacimientoS, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		return LocalDate.parse(fechaS, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 	
 	protected static String pedirNombreUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios) {
@@ -190,8 +187,6 @@ public class controlDatos {
 			if (comprobarNombreUsuario(nombreUsuario, listaUsuarios)) {
 				System.out.println("El nombre de usuario ya esta en el sistema");
 			}
-			sc.nextLine();
-
 		} while (comprobarNombreUsuario(nombreUsuario, listaUsuarios));
 		return nombreUsuario;
 	}
@@ -201,7 +196,7 @@ public class controlDatos {
 		sc.nextLine();
 		do {
 			System.out.print("Introduce un email: ");
-			email = sc.next();
+			email = sc.next().toLowerCase();
 		} while (!controlDatos.validarEmail(email));
 		return email;
 	}
@@ -260,14 +255,40 @@ public class controlDatos {
     protected static String pedirNombreHabitacion(Scanner sc) {
 
 		String nombreHabitacion;
-
 		do {
-			sc.nextLine();
 			System.out.print("Introduce el nombre de la habitacion: ");
+			sc.nextLine();
 			nombreHabitacion = sc.nextLine().toLowerCase();
 		} while (!controlDatos.comprobarString(nombreHabitacion, 3));
 		
+		
 		return nombreHabitacion;
+	}
+    
+	protected static LocalDate pedirPrimerNoche(Scanner sc) {
+		LocalDate primeraNoche, fechaDelSistema = LocalDate.now(), fechaMaxima;
+		boolean fechaCorrecta = false;
+		fechaMaxima = fechaDelSistema.plusDays(Reserva.MAX_DIAS_RESERVA);
+		do {
+			primeraNoche = controlDatos.pedirFecha(sc, "Introduzca la fecha de la primera noche que desea reservar, el formato debe ser DD/MM/AAAA: ");
+			if (!primeraNoche.isBefore(fechaDelSistema)) {
+                fechaCorrecta = true;
+            } else {
+            	System.out.println("La fecha ingresada debe ser posterior a la fecha del sistema.");
+            }
+			
+			if (primeraNoche.isBefore(fechaMaxima)){
+				fechaCorrecta = true;
+			} else {
+				System.out.println("No se permiten reservas superiores a " + Reserva.MAX_DIAS_RESERVA +" dias");
+				fechaCorrecta = false;
+			}
+			
+		} while (!fechaCorrecta);
+		
+		
+		return primeraNoche;
+		
 	}
 	
 	protected static int pedirCategoria(Scanner sc) {
@@ -279,13 +300,9 @@ public class controlDatos {
 	}
 	
 	protected static int pedirPrecioNoche(Scanner sc) {
-		String numeroS;
 		int numero;
 		do {
-			System.out.print("Introduce el precio por noche de la habitacion: ");
-			numeroS = sc.next();
-			numero = controlDatos.comprobarSiNumero(numeroS);
-			
+			numero = controlDatos.pedirOpcion(sc, "Introduce el precio por noche de la habitacion: ");
 			if (numero < Habitacion.PRECIOMINIMONOCHE) {
 				System.out.println("El precio minimo por noche establecido es de "+ Habitacion.PRECIOMINIMONOCHE+"€" );
 			}
@@ -296,13 +313,14 @@ public class controlDatos {
 	}
 	
 	protected static int pedirNoches(Scanner sc) {
-		
-		String numeroS;
 		int numero;
+		
 		do {
-			System.out.print("Introduce el numero de noches que desea reservar: ");
-			numeroS = sc.next();
-			numero = controlDatos.comprobarSiNumero(numeroS);
+			numero = controlDatos.pedirOpcion(sc, "Introduce el numero de noches que desea reservar: ");
+			if (numero > 10) {
+				System.out.println("No es posible reservar mas de 10 noches seguidas");
+				numero = -1;
+			}
 		} while (numero < 0);
 		
 		return numero;

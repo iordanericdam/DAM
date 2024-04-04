@@ -21,7 +21,7 @@ public abstract class Menus {
 		System.out.println("╠════════════════════════════════════════╣");
 		System.out.println("║ 1. Gestion usuarios.                   ║");
 		System.out.println("║ 2. Gestion habitaciones.               ║");
-		System.out.println("║ 3. Ver estado habitaciones.            ║");
+		System.out.println("║ 3. Ver reservas.                       ║");
 		System.out.println("║ 4. Cerrar sesion.                      ║");
 		System.out.println("╚════════════════════════════════════════╝");
 		
@@ -36,6 +36,18 @@ public abstract class Menus {
 		System.out.println("║ 2. Gestion administradores.              ║");
 		System.out.println("║ 3. Salir.                                ║");
 		System.out.println("╚══════════════════════════════════════════╝");
+		
+		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
+	}
+	
+	protected static int mostrarMenuVisualizacionReservasAdministrador(Scanner sc) {
+		System.out.println("╔═══════════════════════════════════════════════╗");
+		System.out.println("║                 Reservas                      ║");
+		System.out.println("╠═══════════════════════════════════════════════╣");
+		System.out.println("║ 1. Reserva de un usuario.                     ║");
+		System.out.println("║ 2. Todas las reservas.                        ║");
+		System.out.println("║ 3. Salir.                                     ║");
+		System.out.println("╚═══════════════════════════════════════════════╝");
 		
 		return controlDatos.pedirOpcion(sc, "Eligue una opcion: ");
 	}

@@ -7,21 +7,17 @@ public class Habitacion {
 	int precioNoche;
 	static final int PRECIOMINIMONOCHE = 50;
 	String categoria, nombreHabitacion;
-	ArrayList<LocalDate> fechaReservada;
 	
-	
-	public Habitacion(int precioNoche, int categoria, String nombreHabitacion, ArrayList<LocalDate> fechaReservada) {
-		this.precioNoche = precioNoche;
-		this.categoria = asignarCategoria(categoria);
-		this.nombreHabitacion = nombreHabitacion;
-		this.fechaReservada = fechaReservada;
-	}
 	
 	public Habitacion(int precioNoche, int categoria, String nombreHabitacion) {
 		this.precioNoche = precioNoche;
 		this.categoria = asignarCategoria(categoria);
 		this.nombreHabitacion = nombreHabitacion;
 	}
+	
+	public Habitacion() {
+	}
+	
 	
     public String getNombreHabitacion() {
 		return nombreHabitacion;
@@ -43,13 +39,6 @@ public class Habitacion {
 		this.categoria = asignarCategoria(categoria);
 	}
 
-	public ArrayList<LocalDate> getFechaReservada() {
-		return fechaReservada;
-	}
-
-	public void setFechaReservada(ArrayList<LocalDate> fechaReservada) {
-		this.fechaReservada = fechaReservada;
-	}
 
 	public static int getPreciominimonoche() {
 		return PRECIOMINIMONOCHE;
@@ -59,16 +48,6 @@ public class Habitacion {
 		this.nombreHabitacion = nombreHabitacion;
 	}
 	
-	protected boolean estaReservada(LocalDate fecha) {
-	        if (fechaReservada != null) {
-	            return fechaReservada.contains(fecha);
-	        } else {
-	            return false; 
-	        }
-	    }
-    
-
-
     
     private String asignarCategoria(int categoria) {
     	if (categoria != 4) {
@@ -91,10 +70,9 @@ public class Habitacion {
     
     @Override
     public String toString() {
-        String fechaReservadaString = fechaReservada != null ? fechaReservada.toString() : "Todavía no hay reservas";
         return String.format(
-                "Nombre habitacion: %s%n" + "Precio por noche: %d%n" + "Categoría: %s%n"+ "Fechas reservadas: %s%n",
-                nombreHabitacion, precioNoche, categoria, fechaReservadaString);
+                "Nombre habitacion: %s%n" + "Precio por noche: %d%n" + "Categoría: %s%n",
+                nombreHabitacion, precioNoche, categoria);
     }
 	
 

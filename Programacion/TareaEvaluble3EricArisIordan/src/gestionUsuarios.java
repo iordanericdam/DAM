@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class gestionUsuarios {
-	
+
 	protected static Usuario comprobarCredenciales(ArrayList<Usuario> listaUsuarios, Scanner sc) {
 		String nombreUsuario, pass;
 		System.out.print("Introdcue el nombre de usario: ");
@@ -46,18 +46,46 @@ public class gestionUsuarios {
 		}
 		return null;
 	}
-	
+
+	protected static void gestionAdministrador(Scanner sc, ArrayList<Usuario> listaUsuarios,
+			ArrayList<Habitacion> listaHabitaciones, ArrayList<Reserva> listaReservas) {
+		int opcion;
+		do {
+			opcion = Menus.mostrarMenuAdmin(sc);
+			switch (opcion) {
+			case 1:
+				gestionUsuarios.gestionUsuarios(sc, listaUsuarios);
+				break;
+			case 2:
+				gestionHabitaciones.gestionHabitaciones(sc, listaHabitaciones);
+				break;
+			case 3:
+				gestionReserva.consultaReservasAdministrador(sc, listaUsuarios, listaReservas);
+				break;
+			case 4:
+				System.out.println("Saliendo...");
+				break;
+			case 6:
+				System.out.println();
+				gestionHabitaciones.mostrarHabitaciones(listaHabitaciones);
+				break;
+			default:
+				System.out.println("Opcion no valida");
+				break;
+			}
+		} while (opcion != 4);
+	}
+
 	protected static void altaUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios,
 			Class<? extends Usuario> tipoUsuario) {
-		String dni = null, nombreCompleto, email, nombreUsuario, contraseña, passProvisional, fechaNacimientoS;
-		int edad;
-		boolean entradaCorrecta = false, respuestaBool = false;
+		String dni = null, nombreCompleto, email, nombreUsuario, passProvisional;
 		LocalDate fechaNacimiento;
 
 		nombreCompleto = controlDatos.pedirNombreCompleto(sc, tipoUsuario);
 		dni = controlDatos.pedirDniNuevo(sc, tipoUsuario, listaUsuarios);
 		if (dni != null) {
-			fechaNacimiento = controlDatos.pedirFecha(sc, "Por favor, introduce tu fecha de nacimiento (en formato DD/MM/AAAA): ");
+			fechaNacimiento = controlDatos.pedirFecha(sc,
+					"Por favor, introduce tu fecha de nacimiento (en formato DD/MM/AAAA): ");
 			nombreUsuario = controlDatos.pedirNombreUsuario(sc, listaUsuarios);
 			email = controlDatos.pedirEmail(sc);
 			passProvisional = dni;
@@ -81,73 +109,87 @@ public class gestionUsuarios {
 
 	protected static void bajaUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios,
 			Class<? extends Usuario> tipoUsuario) {
+			if (tipoUsuario.isAssignableFrom(Cliente.class)) {
+				Usuario usu = buscarUsuario(sc, listaUsuarios, Cliente.class);
+				if (usu != null) {
+					eliminarUsuario(usu, listaUsuarios, sc);
+				}
+			} else if (tipoUsuario.isAssignableFrom(Administrador.class)) {
+				Usuario usu = buscarUsuario(sc, listaUsuarios, Administrador.class);
+				if (usu != null) {
+					eliminarUsuario(usu, listaUsuarios, sc);
+				}
+				
+			}
+			
+		
+	}
+
+	protected static Usuario buscarUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios,
+			Class<? extends Usuario> tipoUsuario) {
 
 		String dni = controlDatos.pedirDni(sc, tipoUsuario);
 		int i = 0;
-		boolean encontrado = false, respuestaBool = false;
-		while (i < listaUsuarios.size() && !encontrado) {
+		boolean encontrado = false;
+		while (i < listaUsuarios.size()) {
 			Usuario usu = listaUsuarios.get(i);
-			if (tipoUsuario.isAssignableFrom(Cliente.class)) {
-				encontrado = buscarYeliminarUsuario(usu, listaUsuarios, Cliente.class, dni, sc, i);
-			} else if (tipoUsuario.isAssignableFrom(Administrador.class)) {
-				encontrado = buscarYeliminarUsuario(usu, listaUsuarios, Administrador.class, dni, sc, i);
+			if (tipoUsuario.isAssignableFrom(Cliente.class) && usu instanceof Cliente) {
+				if (usu.getDni() != null && usu.getDni().equals(dni)) {
+					return usu;
+				}
+			} else if (tipoUsuario.isAssignableFrom(Administrador.class) && usu instanceof Administrador) {
+				if (usu.getDni() != null && usu.getDni().equals(dni)) {
+					return usu;
+				}
 			}
+
 			i++;
 		}
+
 		if (!encontrado) {
 			System.out.println("Usaurio no encontrado");
 			sc.nextLine();
 		}
+		return null;
+
 	}
 
-	private static boolean buscarYeliminarUsuario(Usuario usu, ArrayList<Usuario> listaUsuarios,
-			Class<? extends Usuario> tipoUsuario, String dni, Scanner sc, int i) {
-		boolean encontrado = false, respuestaBool;
-		if (usu.getDni() != null && usu.getDni().equals(dni)) {
+	private static void eliminarUsuario(Usuario usu, ArrayList<Usuario> listaUsuarios,
+			 Scanner sc) {
+		boolean respuestaBool;
+		
 			respuestaBool = controlDatos.obtenerRespuestaSiNo(sc,
 					"¿Seguro que dese eliminar a " + usu.getNombreCompleto() + "?");
 			sc.nextLine();
-			encontrado = true;
+			
 			if (respuestaBool) {
-				listaUsuarios.remove(i);
+				listaUsuarios.remove(usu);
 			} else {
 				System.out.println("Vuelve caundo estes seguro");
 			}
 		}
 
-		return encontrado;
-
-	}
-
 	protected static void modificarUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios,
 			Class<? extends Usuario> tipoUsuario) {
-		String dni = controlDatos.pedirDni(sc, tipoUsuario);
-		int i = 0;
-		boolean encontrado = false;
-		while (i < listaUsuarios.size() && !encontrado) {
-			Usuario usu = listaUsuarios.get(i);
-			if (tipoUsuario.isAssignableFrom(Cliente.class) && usu instanceof Cliente) {
-				encontrado = buscarYmodificarUsuario(usu, listaUsuarios, Cliente.class, dni, sc, i);
-			} else if (tipoUsuario.isAssignableFrom(Administrador.class) && usu instanceof Administrador) {
-				encontrado = buscarYmodificarUsuario(usu, listaUsuarios, Administrador.class, dni, sc, i);
+		if (tipoUsuario.isAssignableFrom(Cliente.class)) {
+			Usuario usu = buscarUsuario(sc, listaUsuarios, Cliente.class);
+			if (usu != null) {
+				modificarUsuario(usu, listaUsuarios, Cliente.class, sc);
 			}
-			i++;
+		} else if (tipoUsuario.isAssignableFrom(Administrador.class)) {
+			Usuario usu = buscarUsuario(sc, listaUsuarios, Administrador.class);
+			if (usu != null) {
+				modificarUsuario(usu, listaUsuarios, Cliente.class, sc);
+			}
+			
 		}
-		if (!encontrado) {
-			System.out.println("Usaurio no encontrado");
-			sc.nextLine();
-		}
-
 	}
 
-	private static boolean buscarYmodificarUsuario(Usuario usu, ArrayList<Usuario> listaUsuarios,
-			Class<? extends Usuario> tipoUsuario, String dni, Scanner sc, int i) {
+	private static void modificarUsuario(Usuario usu, ArrayList<Usuario> listaUsuarios,Class<? extends Usuario> tipoUsuario,
+			  Scanner sc) {
 		String nombreCompleto, email, nombreUsuario, contraseña;
 		LocalDate fechaNacimiento;
-		boolean encontrado = false, respuestaBool;
 		int opcion;
-		if (usu.getDni() != null && usu.getDni().equals(dni)) {
-			encontrado = true;
 			do {
 				System.out.println(usu.toString());
 				opcion = Menus.mostrarMenuModificarUsuario(sc);
@@ -174,7 +216,8 @@ public class gestionUsuarios {
 					} while (!controlDatos.comprobarString(contraseña, 8));
 					break;
 				case 5:
-					fechaNacimiento = controlDatos.pedirFecha(sc, "\"Por favor, introduce tu fecha de nacimiento (en formato DD/MM/AAAA): \"");
+					fechaNacimiento = controlDatos.pedirFecha(sc,
+							"\"Por favor, introduce tu fecha de nacimiento (en formato DD/MM/AAAA): ");
 					usu.setFechaNacimiento(fechaNacimiento);
 					break;
 				case 6:
@@ -185,9 +228,6 @@ public class gestionUsuarios {
 				}
 
 			} while (opcion != 6);
-		}
-
-		return encontrado;
 
 	}
 
@@ -204,12 +244,11 @@ public class gestionUsuarios {
 		}
 		return indices;
 	}
-	
+
 //	Administradores
-	
+
 	protected static void gestionUsuarios(Scanner sc, ArrayList<Usuario> listaUsuarios) {
-		String opcionS;
-		int opcion, tipo = 0;
+		int tipo = 0;
 		do {
 			tipo = elegirAdminCliente(sc);
 			switch (tipo) {
@@ -226,12 +265,13 @@ public class gestionUsuarios {
 		} while (tipo != 3);
 	}
 
-	private static void gestionClientesOAdministradores(Scanner sc, Class<? extends Usuario> tipoUsuario, ArrayList<Usuario> listaUsuarios) {
+	private static void gestionClientesOAdministradores(Scanner sc, Class<? extends Usuario> tipoUsuario,
+			ArrayList<Usuario> listaUsuarios) {
 		int opcion = 0;
 		do {
 			if (tipoUsuario.isAssignableFrom(Cliente.class)) {
-				 opcion = Menus.mostrarMenuGestionClientes(sc);
-			} else if (tipoUsuario.isAssignableFrom(Administrador.class)){
+				opcion = Menus.mostrarMenuGestionClientes(sc);
+			} else if (tipoUsuario.isAssignableFrom(Administrador.class)) {
 				opcion = Menus.mostrarMenuGestionAdministradores(sc);
 			}
 			switch (opcion) {
@@ -257,7 +297,6 @@ public class gestionUsuarios {
 	}
 
 	private static int elegirAdminCliente(Scanner sc) {
-		String opcionS;
 		int opcion = 0;
 		do {
 			opcion = Menus.mostrarMenuGestionUsuarios(sc);
