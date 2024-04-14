@@ -7,11 +7,11 @@ public class main {
 
 	public static void main(String[] args) {
 		
-
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		ArrayList<Habitacion> listaHabitaciones = new ArrayList<Habitacion>();
 		ArrayList<Reserva> listaReservas = new ArrayList<Reserva>();
 		Scanner sc = new Scanner(System.in);
+		
 		
 		creacionObjetos(listaUsuarios, listaReservas, listaHabitaciones);
 		
@@ -34,8 +34,15 @@ public class main {
 
 	}
 	
+	
+	
+	
+	
+	
+	
 	protected static void creacionObjetos(ArrayList<Usuario> listaUsuarios, ArrayList<Reserva> listaReservas, ArrayList<Habitacion> listaHabitaciones) {
 
+		
 		Administrador admin1 = new Administrador("71677091Y", "Eric Aris Iordan", "eericarisiordan@gmail.com", "admin",
 				"admin");
 		listaUsuarios.add((Administrador) admin1);

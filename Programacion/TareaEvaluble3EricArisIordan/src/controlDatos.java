@@ -15,9 +15,10 @@ public class controlDatos {
 				System.out.println("Debes introducir un número mayor o igual que 0.");
 				opcion = -1;
 			}
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			System.out.println("Debes introducir un numero.");
-
+		} catch (Exception e) {
+			
 		}
 		return opcion;
 	}
@@ -227,9 +228,9 @@ public class controlDatos {
 		return encontrado;
 	}
 	
-	private static boolean comprobarUsaurio(String dni, ArrayList<Usuario> listUsuarios) {
+	private static boolean comprobarUsaurio(String dni, ArrayList<Usuario> listaUsuarios) {
 		boolean existe = false;
-		for (Usuario usu : listUsuarios) {
+		for (Usuario usu : listaUsuarios) {
 			if (usu.getDni() != null && usu.getDni().equals(dni)) {
 				System.out.println("El DNI ya se encuentra registrado");
 				existe = true;
