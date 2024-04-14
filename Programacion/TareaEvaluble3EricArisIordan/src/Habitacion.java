@@ -71,7 +71,7 @@ public class Habitacion {
     @Override
     public String toString() {
         return String.format(
-                "Nombre habitacion: %s%n" + "Precio por noche: %d%n" + "Categoría: %s%n",
+                "Nombre habitacion: %s%n" + "Precio por noche: %d€%n" + "Categoría: %s%n",
                 nombreHabitacion, precioNoche, categoria);
     }
 	
