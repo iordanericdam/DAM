@@ -49,7 +49,7 @@ public class Reserva {
 
 	@Override
 	public String toString() {
-		return String.format("DNI del cliente: %s%n"+"Nombre habitacion: %s%n"+ "Fechas reservadas: %s%n" + "Coste reserva: %d%n", dniCliente, nombreHabitacion, fechaReservada, costeReserva);
+		return String.format("DNI del cliente: %s%n"+"Nombre de la habitacion: %s%n"+ "Fechas reservadas: %s%n" + "Coste de la reserva: %d€%n", dniCliente, nombreHabitacion, fechaReservada, costeReserva);
 	}
 	
 	

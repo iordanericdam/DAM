@@ -276,11 +276,12 @@ public class controlDatos {
                 fechaCorrecta = true;
             } else {
             	System.out.println("La fecha ingresada debe ser posterior a la fecha del sistema.");
+            	 fechaCorrecta = false;
             }
 			
-			if (primeraNoche.isBefore(fechaMaxima)){
+			if (primeraNoche.isBefore(fechaMaxima) && fechaCorrecta){
 				fechaCorrecta = true;
-			} else {
+			} else if (primeraNoche.isAfter(fechaMaxima)){
 				System.out.println("No se permiten reservas superiores a " + Reserva.MAX_DIAS_RESERVA +" dias");
 				fechaCorrecta = false;
 			}

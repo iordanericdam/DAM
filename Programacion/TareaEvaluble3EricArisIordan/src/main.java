@@ -60,11 +60,17 @@ public class main {
         fechasReserva.add(LocalDate.of(2024, 4, 10)); 
         fechasReserva.add(LocalDate.of(2024, 4, 11));
 
-        Reserva r1 = new Reserva("España", "85058845S", fechasReserva, 180);
+        Reserva r1 = new Reserva("valencia", "85058845S", fechasReserva, 180);
         listaReservas.add(r1);
         
-        Habitacion hab1 = new Habitacion(90, 2, "españa");
+        Habitacion hab1 = new Habitacion(90, 2, "valencia");
         listaHabitaciones.add(hab1);
+        
+        Habitacion hab2 = new Habitacion(50, 1, "marvella");
+        listaHabitaciones.add(hab2);
+        
+        Habitacion hab3 = new Habitacion(120, 1, "madrid");
+        listaHabitaciones.add(hab3);
 	}
 	
     
