@@ -7,11 +7,11 @@ public class main {
 
 	public static void main(String[] args) {
 		
-
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		ArrayList<Habitacion> listaHabitaciones = new ArrayList<Habitacion>();
 		ArrayList<Reserva> listaReservas = new ArrayList<Reserva>();
 		Scanner sc = new Scanner(System.in);
+		
 		
 		creacionObjetos(listaUsuarios, listaReservas, listaHabitaciones);
 		
@@ -34,8 +34,15 @@ public class main {
 
 	}
 	
+	
+	
+	
+	
+	
+	
 	protected static void creacionObjetos(ArrayList<Usuario> listaUsuarios, ArrayList<Reserva> listaReservas, ArrayList<Habitacion> listaHabitaciones) {
 
+		
 		Administrador admin1 = new Administrador("71677091Y", "Eric Aris Iordan", "eericarisiordan@gmail.com", "admin",
 				"admin");
 		listaUsuarios.add((Administrador) admin1);
@@ -53,11 +60,17 @@ public class main {
         fechasReserva.add(LocalDate.of(2024, 4, 10)); 
         fechasReserva.add(LocalDate.of(2024, 4, 11));
 
-        Reserva r1 = new Reserva("España", "85058845S", fechasReserva, 180);
+        Reserva r1 = new Reserva("valencia", "85058845S", fechasReserva, 180);
         listaReservas.add(r1);
         
-        Habitacion hab1 = new Habitacion(90, 2, "españa");
+        Habitacion hab1 = new Habitacion(90, 2, "valencia");
         listaHabitaciones.add(hab1);
+        
+        Habitacion hab2 = new Habitacion(50, 1, "marvella");
+        listaHabitaciones.add(hab2);
+        
+        Habitacion hab3 = new Habitacion(120, 1, "madrid");
+        listaHabitaciones.add(hab3);
 	}
 	
     

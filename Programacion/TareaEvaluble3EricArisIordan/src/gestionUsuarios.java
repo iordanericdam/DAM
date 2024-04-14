@@ -121,8 +121,6 @@ public class gestionUsuarios {
 				}
 				
 			}
-			
-		
 	}
 
 	protected static Usuario buscarUsuario(Scanner sc, ArrayList<Usuario> listaUsuarios,
