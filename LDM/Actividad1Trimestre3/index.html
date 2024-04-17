@@ -19,12 +19,41 @@
       <div id="filtros" class="divGenerico">
         <h3>Filtro:</h3>
         <select class="form-select" id="select">
-          <option value="all">Seleciona una opcion:</option>
-          <option value="precioMinimo">Precio Minimo</option>
+          <option value="all">Todo</option>
+          <option value="precioMinimo">Ordenar precio mas bajo primero</option>
           <option value="marca">Marca</option>
           <option value="categoria">Categoria</option>
         </select>
-        <select  id="selectMarca" style="display: none;" class="form-select"></select>
+        <input  list="selectMarcas" id="selectMarca" style="display: none;" class="form-select">  
+        <datalist id="selectMarcas">
+          <option value="Apple"></option>
+          <option value="Samsung"></option>
+          <option value="OPPO"></option>
+          <option value="Huawei"></option>
+          <option value="Samsung"></option>
+          <option value="Microsoft Surface"></option>
+          <option value="Infinix"></option>
+          <option value="HP Pavilion"></option>
+          <option value="Impression of Acqua Di Gio"></option>
+          <option value="Royal_Mirage"></option>
+          <option value="Fog Scent Xpressio"></option>
+          <option value="Al Munakh"></option>
+          <option value="Lord - Al-Rehab"></option>
+          <option value="L'Oreal Paris"></option>
+          <option value="Hemani Tea"></option>
+          <option value="Dermive"></option>
+          <option value="ROREC White Rice"></option>
+          <option value="Fair & Clear"></option>
+          <option value="Saaf & Khaas"></option>
+          <option value="Bake Parlor Big"></option>
+          <option value="fauji"></option>
+          <option value="Dry Rose"></option>
+          <option value="Boho Decor"></option>
+          <option value="Flying Wooden"></option>
+          <option value="LED Lights"></option>
+          <option value="luxury palace"></option>
+          <option value="Golden"></option>
+        </datalist>
         <select  id="selectCategoria" style="display: none;" class="form-select">
         <option value="smartphones">Moviles</option>
         <option value="laptops">Portatiles</option>
@@ -33,6 +62,7 @@
         <option value="groceries">groceries</option>
         <option value="home-decoration">Decoracion de la casa</option>
         </select>
+   
         <button class="btn btn-primary" id="btnSelect">Aplicar filtro</button>
       </div>
       <div class="row">
@@ -42,6 +72,7 @@
         </div>
         <div class="col divGenerico">
             <h2>Cesta</h2>
+            <div id="lista_cesta" class="row"></div>
         </div>
       </div>
     </div>
