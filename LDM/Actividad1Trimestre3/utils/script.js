@@ -1,78 +1,122 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const productList = document.getElementById("lista_productos");
-  let select = document.querySelector("#select");
-  const btnSelect = document.querySelector("#btnSelect");
-  /* const selectMarca = document.querySelector("#selectMarca"); */
-  const selectCategoria = document.querySelector("#selectCategoria");
-  const marcaSeleccionada = document.querySelector("#selectMarca");
+  let productos = [];
   let cesta = [];
+
+  const productList = document.getElementById("lista_productos");
+  const select = document.querySelector("#select");
+  const btnSelect = document.querySelector("#btnSelect");
+  const selectCategoria = document.querySelector("#selectCategoria");
+  const selectMarca = document.querySelector("#selectMarca");
   const listaCesta = document.querySelector("#lista_cesta");
-  function añadirProductoCesta(producto) {
-    console.log("traza añadirProductoCesta" + producto);
+
+  function fetchProductos() {
+    fetch("https://dummyjson.com/products")
+      .then((response) => response.json())
+      .then((data) => {
+        productos = data.products;
+        console.log(productos);
+        mostrarProductosEnLista(productos);
+        cesta.forEach((item) => mostrarProducto(item, listaCesta));
+        console.log(cesta);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los datos:", error);
+      });
   }
 
-  function mostrarProducto(item, productList) {
-    productList.innerHTML += `<div class="card col-2 m-2" style="width: 18rem;">
+  function mostrarProductosEnLista(productos) {
+    productList.innerHTML = "";
+    productos.forEach((producto) => mostrarProducto(producto, productList));
+  }
+
+  function añadirProductoCesta(title, image, price) {
+    const productoExistente = cesta.find(
+      (producto) => producto.title === title
+    );
+    if (productoExistente) {
+      listaCesta.textContent = "";
+      cesta.forEach((item) => mostrarProductoCesta(item, listaCesta));
+      productoExistente.quantity++;
+    } else {
+      const producto = {
+        title: title,
+        thumbnail: image,
+        price: price,
+        quantity: 1,
+      };
+      cesta.push(producto);
+      mostrarProductoCesta(producto, listaCesta);
+    }
+  }
+
+  function filtrarProductosPorCategoria(categoriaSeleccionada) {
+    return productos.filter(
+      (producto) => producto.category === categoriaSeleccionada
+    );
+  }
+
+  function filtrarProductosPorMarca(marcaSeleccionada) {
+    return productos.filter((producto) =>
+      producto.brand.includes(marcaSeleccionada)
+    );
+  }
+
+  function mostrarProducto(item, container) {
+    container.innerHTML += `<div class="card col-2 m-2" style="width: 18rem;">
         </br>
         <img src="${item.thumbnail}" class="card-img-top" alt="Imagen de producto">
         <div class="card-body">
             <h5 class="card-title">${item.title}</h5>
             <p class="card-text">${item.description}</p>
             <p class="card-text">Precio: ${item.price}€</p>
-            <a onclick="añadirProductoCesta('${item.title}')" class="btn btn-primary">Añadir a la cesta</a>
+            <a class="btn btn-primary" data-product-name="${item.title}" data-product-image="${item.thumbnail}" data-product-price="${item.price}">Añadir a la cesta</a>
         </div>
     </div>`;
   }
-  function filtrarProductosPorCategoria(categoriaSeleccionada) {
-    return productos.filter(function (producto) {
-      return producto.category === selectCategoria.value;
-    });
+
+  function mostrarProductoCesta(item, container) {
+    container.innerHTML += `<div class="card col-2 m-2" style="width: 18rem;">
+        </br>
+        <img src="${item.thumbnail}" class="card-img-top" alt="Imagen de producto">
+        <div class="card-body">
+            <h5 class="card-title">${item.title}</h5>
+            <p class="card-text">Precio: ${item.price}€</p>
+            <p class="card-text">Cantidad: ${item.quantity}</p>
+        </div>
+        <div class="contador">
+        <a class="btn btn-secondary" >-</a>
+        <p id="numero">${item.quantity}</p>
+        <a class="btn btn-secondary" >+</a>
+        </div>
+    </div>`;
   }
 
-  btnSelect.addEventListener("click", (e) => {
+  btnSelect.addEventListener("click", () => {
     switch (select.value) {
       case "all":
-        productList.innerHTML = "";
-        productos.forEach((productos) =>
-          mostrarProducto(productos, productList)
-        );
+        mostrarProductosEnLista(productos);
         break;
       case "precioMinimo":
-        productList.innerHTML = "";
-        const productosOrdenados = [...data.products];
+        const productosOrdenados = [...productos];
         productosOrdenados.sort((a, b) => a.price - b.price);
-        productosOrdenados.forEach((item) =>
-          mostrarProducto(item, productList)
-        );
+        mostrarProductosEnLista(productosOrdenados);
         break;
       case "categoria":
-        productList.innerHTML = "";
-        filtrarProductosPorCategoria(selectCategoria.value).forEach((item) => {
-          mostrarProducto(item, productList);
-        });
+        mostrarProductosEnLista(
+          filtrarProductosPorCategoria(selectCategoria.value)
+        );
         break;
       case "marca":
-        productList.innerHTML = "";
-        filtrarProductosPorMarca(selectMarca.value).forEach((item) => {
-          mostrarProducto(item, productList);
-        });
-        selectMarca.value = "";
+        mostrarProductosEnLista(filtrarProductosPorMarca(selectMarca.value));
         break;
     }
   });
 
-  function filtrarProductosPorMarca(marcaSeleccionada) {
-    return productos.filter(function (producto) {
-      return producto.brand.includes(marcaSeleccionada);
-    });
-  }
-
-  select.addEventListener("change", (e) => {
-    if (select.value == "marca") {
-      console.log(selectMarca);
+  select.addEventListener("change", () => {
+    if (select.value === "marca") {
       selectCategoria.style.display = "none";
       selectMarca.style.display = "inline";
-    } else if (select.value == "categoria") {
+    } else if (select.value === "categoria") {
       selectCategoria.style.display = "inline";
       selectMarca.style.display = "none";
     } else {
@@ -81,16 +125,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  fetch("https://dummyjson.com/products")
-    .then((response) => response.json())
-    .then((data) => {
-      const productos = data.products;
-
-      productos.forEach((productos) => mostrarProducto(productos, productList));
-      cesta.forEach((cesta) => mostrarProducto(cesta, listaCesta));
-      console.log(cesta);
-    })
-    .catch((error) => {
-      console.error("Error al obtener los datos:", error);
-    });
+  productList.addEventListener("click", function (event) {
+    if (event.target && event.target.matches("a.btn-primary")) {
+      const productName = event.target.getAttribute("data-product-name");
+      const productImage = event.target.getAttribute("data-product-image");
+      const productPrice = event.target.getAttribute("data-product-price");
+      añadirProductoCesta(productName, productImage, productPrice);
+    }
+  });
+  fetchProductos();
 });
