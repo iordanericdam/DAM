@@ -49,6 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+
+
   function filtrarProductosPorCategoria(categoriaSeleccionada) {
     return productos.filter(
       (producto) => producto.category === categoriaSeleccionada
@@ -60,6 +62,31 @@ document.addEventListener("DOMContentLoaded", function () {
       producto.brand.includes(marcaSeleccionada)
     );
   }
+
+  function botonMas(title){
+    productoExistente = cesta.find(
+      (producto) => producto.title === title
+    );
+    productoExistente.quantity++;
+    console.log(productoExistente.quantity)
+    refrescarCesta()
+  }
+
+  function botonMenos(title){
+    productoExistente = cesta.find(
+      (producto) => producto.title === title
+    );
+    productoExistente.quantity--;
+    console.log(productoExistente.quantity)
+    refrescarCesta()
+  }
+
+  function refrescarCesta(){
+    listaCesta.textContent = "";
+    cesta = cesta.filter((item) => item.quantity > 0);
+    cesta.forEach((item) => mostrarProductoCesta(item, listaCesta));
+    
+  };
 
   function mostrarProducto(item, container) {
     container.innerHTML += `<div class="card col-2 m-2" style="width: 18rem;">
@@ -84,9 +111,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <p class="card-text">Cantidad: ${item.quantity}</p>
         </div>
         <div class="contador">
-        <a class="btn btn-secondary" >-</a>
+        <a class="btn btn-secondary menos" data-product-name="${item.title}">-</a>
         <p id="numero">${item.quantity}</p>
-        <a class="btn btn-secondary" >+</a>
+        <a class="btn btn-secondary mas" data-product-name="${item.title}">+</a>
         </div>
     </div>`;
   }
@@ -133,5 +160,17 @@ document.addEventListener("DOMContentLoaded", function () {
       añadirProductoCesta(productName, productImage, productPrice);
     }
   });
+
+  listaCesta.addEventListener("click", function (event){
+    if (event.target && event.target.matches("a.btn-secondary")) {
+      productName = event.target.getAttribute("data-product-name");
+      } if (event.target.matches("a.menos"))  {
+        botonMenos(productName)
+      } else if(event.target.matches("a.mas")){
+        botonMas(productName)
+      }
+    
+      
+  })
   fetchProductos();
 });
