@@ -49,8 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-
-
   function filtrarProductosPorCategoria(categoriaSeleccionada) {
     return productos.filter(
       (producto) => producto.category === categoriaSeleccionada
@@ -68,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
       (producto) => producto.title === title
     );
     productoExistente.quantity++;
-    console.log(productoExistente.quantity)
     refrescarCesta()
   }
 
@@ -76,10 +73,38 @@ document.addEventListener("DOMContentLoaded", function () {
     productoExistente = cesta.find(
       (producto) => producto.title === title
     );
-    productoExistente.quantity--;
+
     console.log(productoExistente.quantity)
-    refrescarCesta()
-  }
+
+    if (productoExistente.quantity == 1){
+      Swal.fire({
+        title: "¿Estás seguro que deseas eliminar el producto de la cesta?",
+        text: "Podrás añadir nuevamente el producto en cualquier momento",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, elimínalo!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "¡Eliminado!",
+            text: "El producto ha sido eliminado.",
+            icon: "success"
+          });
+          productoExistente.quantity = 0;
+          refrescarCesta();
+        } else {
+          console.log("Cancelado");
+        }
+      });
+    } else {
+      productoExistente.quantity--;
+      refrescarCesta();
+    }
+}
+
+
 
   function refrescarCesta(){
     listaCesta.textContent = "";

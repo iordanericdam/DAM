@@ -12,3 +12,16 @@
  width: 20%;
 }
 
+.contador{
+  display: inline-flex;
+  margin-left: 60px;
+}
+
+.menos, 
+.mas{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+
+
