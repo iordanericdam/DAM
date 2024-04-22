@@ -14,10 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         productos = data.products;
-        console.log(productos);
         mostrarProductosEnLista(productos);
         cesta.forEach((item) => mostrarProducto(item, listaCesta));
-        console.log(cesta);
       })
       .catch((error) => {
         console.error("Error al obtener los datos:", error);
@@ -74,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
       (producto) => producto.title === title
     );
 
-    console.log(productoExistente.quantity)
 
     if (productoExistente.quantity == 1){
       Swal.fire({
@@ -95,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
           productoExistente.quantity = 0;
           refrescarCesta();
         } else {
-          console.log("Cancelado");
         }
       });
     } else {
@@ -103,8 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
       refrescarCesta();
     }
 }
-
-
 
   function refrescarCesta(){
     listaCesta.textContent = "";
