@@ -50,6 +50,7 @@ public class gestionHabitaciones {
 		String nombreHabitacion;
 		int i = 0, opcion = 0, categoria, precioNoche;
 		
+		gestionHabitaciones.mostrarHabitaciones(listaHabitaciones);
 		nombreHabitacion = controlDatos.pedirNombreHabitacion(sc);
 		boolean encontrado = false;
 		while (i < listaHabitaciones.size() && !encontrado) {
@@ -76,15 +77,14 @@ public class gestionHabitaciones {
 						break;
 					
 					}
-					
-				} while (opcion != 4);
+				} while (opcion != 3);
 				
 			}
 			
 			i++;
 		}
 		if (!encontrado) {
-			System.out.println("Usaurio no encontrado");
+			System.out.println("Habitacion no encontrada");
 			sc.nextLine();
 		}
 
