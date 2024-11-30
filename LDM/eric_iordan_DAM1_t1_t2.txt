@@ -1,9 +1,0 @@
-Link del repositorio:
-https://github.com/iordanericdam/iordanericdam.github.io.git
-
-Link para probar la web:
-https://iordanericdam.github.io/
-
-Nota: Si el navegador abre la web anterior abrir en una ventana incógnito, gracias.
-
-
