@@ -1,7 +1,7 @@
 package dao;
 
 import database.DBConnection;
-import model.Producto;
+import model.Empleado;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +15,27 @@ public class EmpleadoDAO {
     private ResultSet resultSet;
 
 
-    public void registrarProducto(Producto producto) throws SQLException {
+    public ResultSet mostrarEmpleados() throws SQLException {
+        String query = "SELECT * FROM empleados";
+
         connection = new  DBConnection().getConnection();
-       // preparedStatement = connection.prepareStatement();
+        preparedStatement = connection.prepareStatement(query);
+
+        return preparedStatement.executeQuery();
     }
+
+    public boolean crearEmpleado(Empleado empleado) throws SQLException {
+        String query = "INSERT INTO empleados (nombre, correo, apellidos) VALUES ('"
+                + empleado.getNombre() + "', '"
+                + empleado.getCorreo() + "', '"
+                + empleado.getApellidos() + "');";
+
+        connection = new  DBConnection().getConnection();
+        preparedStatement = connection.prepareStatement(query);
+
+        return preparedStatement.execute();
+    }
+
+
 
 }
