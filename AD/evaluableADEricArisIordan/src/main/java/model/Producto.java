@@ -15,23 +15,18 @@ public class Producto implements Serializable {
     private int id;
     private String nombre;
     private String descripcion;
-    private int cantidadd;
+    private int cantidad;
     private double precio;
-
-    public Producto(String nombre, String descripcion, int cantidadd, double precio) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.cantidadd = cantidadd;
-        this.precio = precio;
-    }
 
     public void mostrarDatos(){
         System.out.println("id = " + id);
         System.out.println("nombre = " + nombre);
         System.out.println("descripcion = " + descripcion);
-        System.out.println("cantidadd = " + cantidadd);
+        System.out.println("cantidadd = " + cantidad);
         System.out.println("precio = " + precio);
     }
+
+
 
 
 }

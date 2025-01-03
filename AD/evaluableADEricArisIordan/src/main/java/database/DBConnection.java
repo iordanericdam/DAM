@@ -21,7 +21,11 @@ public class DBConnection {
         if(connection == null){
             createConnection();
         }
-
         return connection;
+    }
+
+    public void closeConnection() throws SQLException{
+        connection.close();
+        connection = null;
     }
 }
